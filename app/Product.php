@@ -4,23 +4,24 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Budget;
+use App\facture;
 
 class Product extends Model
 {
     //
     protected $fillable = [
-        
-        
+      //  'id',
+        'code',
         'facture_id',
         'description',
         'date_achat',
         'unit_price',
-        'qty',
+       // 'qty',
         'budget_id'
     ];
     public function facture()
     {
-        $this->belongsTo(Facture::class);
+       return $this->belongsTo(Facture::class);
     }
 
     public function budget(){

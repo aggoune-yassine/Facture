@@ -9,15 +9,24 @@ import inscription from '../components/inscription.vue'
 import adminPanel from '../components/AdminPanel.vue'
 import edit_facture from '../components/Edit_Facture.vue'
 import budget from '../components/Budget.vue'
+import Produit from '../components/Produit.vue'
+import product from '../components/ProduitDetail.vue'
 
 
 Vue.use(VueRouter)
 
-const routes = [{
+const routes = [{  
 
         path: '/',
         component: Home,
         name: 'home'
+    },
+
+    {
+
+        path: '/Produit',
+        component: Produit,
+        name: 'Produit'
     },
     {
 
@@ -66,6 +75,14 @@ const routes = [{
         path: '/budget',
         component: budget,
         name: 'budget'
+    },
+
+    ,
+    {
+
+        path: '/Produit/:id',
+        component: product,
+        name: 'product'
     },
 
 ];

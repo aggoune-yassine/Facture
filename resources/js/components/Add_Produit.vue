@@ -28,6 +28,23 @@
                         </button>
                     </div>
                     <div class="modal-body">
+
+
+                           <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"
+                                    >Code produit </span
+                                >
+                            </div>
+                            <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Produit"
+                                aria-label="Produit"
+                                aria-describedby="basic-addon1"
+                                v-model="code"
+                            />
+                        </div>
                      
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -95,21 +112,7 @@
 
 
 
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <label
-                                    class="input-group-text"
-                                    for="inputGroupSelect01"
-                                    >Quantité</label
-                                >
-                            </div>
-                           <input
-                                type="number"
-                                class="form-control"
-                                aria-label="Amount (to the nearest dollar)"
-                                v-model="qty"
-                            />
-                        </div>
+               
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -167,11 +170,11 @@
 export default {
     data() {
         return {
+            code:"",
             date: "",
             code_budget:'',
             description: "",
-          
-            qty: "1",
+        
             unit_price: "00",
             id_facture: this.$route.params.id,
             budgets:'',
@@ -181,7 +184,7 @@ export default {
     },
     computed: {
         total: function() {
-            return this.qty * this.unit_price;
+            return  this.unit_price;
         }
     },
 
@@ -189,10 +192,10 @@ export default {
         addpruduct(){
             axios.post('/api/produit', {
             date:this.date,
+            code:this.code,
             code_budget:this.code_budget,
             description:this.description,
-           
-            qty:this.qty,
+      
             unit_price: this.unit_price,
             id_facture: this.$route.params.id,
             
@@ -203,7 +206,7 @@ export default {
             this.date_achat="";
             this.description="",
            
-            this.qty="",
+           
             this.unit_price="",
             this.id_facture=""
             })

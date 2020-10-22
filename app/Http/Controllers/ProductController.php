@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 
 use App\Facture;
 use App\Product;
@@ -16,11 +17,22 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $product = Product::all();
+        
+        Carbon::setLocale('fr');
+        
+        $produits = Product::latest()->paginate('2');
+        //$produits = Product::all();
 
+        foreach( $produits as $produit){
+            $produit->setattribute('created',$produit->created_at->diffForHumans());
+          
+            $produit->setattribute('facture',$produit->facture);
+       
+        }
 
-
-        return response()->json($product);
+      //dd($produits);
+   
+        return response()->json($produits);
     }
 
     /**
@@ -45,7 +57,7 @@ class ProductController extends Controller
         $total=0;
 
         Product::create([
-
+            'code'=>$request->code,
           
             'facture_id' => $request->id_facture,
 
@@ -55,7 +67,7 @@ class ProductController extends Controller
             'date_achat' => $request->date,
 
             'unit_price' => $request->unit_price,
-            'qty' => $request->qty,
+         //   'qty' => $request->qty,
 
         ]);
       //  $product = Product::where('facture_id', $request->id_facture)->orderBy('id', 'desc')->get();
@@ -65,7 +77,7 @@ class ProductController extends Controller
 
         $facture = Facture::where('id',$request->id_facture)->get();
         $product= Product::where('facture_id',$request->id_facture)->get();
-       $nbr=Product::where('facture_id',$request->id_facture)->sum('qty');
+      $nbr=Product::where('facture_id',$request->id_facture)->count();
 
        foreach ($product as $p) {
            $total=$total+($p->unit_price)*($p->qty);
@@ -74,7 +86,7 @@ class ProductController extends Controller
          
         return response()->json([
 
-           // 'facture'=>$facture,
+          
             'produits'=>$product,
             'nbr'=>$nbr,
             'total'=>$total
@@ -90,9 +102,15 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        //
+      
+        // dd($id);   
+
+        $product= Product::where('id',$id)->get();
+    return response()->json($product);
+
+
         
     }
 

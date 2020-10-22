@@ -19,11 +19,19 @@ class FactureController extends Controller
     {
         //
         Carbon::setLocale('fr');
-        $factures = Facture::latest()->paginate('5');
+        $factures = Facture::latest()->paginate('2');
 
         foreach ($factures as $facture) {
 
-            # code...
+           
+
+           $facture->setattribute('produits',$facture->produits);
+
+           foreach ($facture->produits as $produit) {
+               # code...
+               $produit->setattribute('created',$produit->created_at->diffForHumans());
+           }
+
             $facture->setattribute('user',$facture->user);
             $facture->setattribute('created',$facture->created_at->diffForHumans());
         }
@@ -109,7 +117,7 @@ class FactureController extends Controller
 
        $facture->setattribute('fournisseur',$facture->fournisseur);
        $facture->setattribute('total', $this->refresh($facture));
-       $facture->setattribute('nbr',$facture->produits->sum('qty'));
+       //$facture->setattribute('nbr',$facture->produits->sum('qty'));
 
    
         
@@ -218,7 +226,7 @@ class FactureController extends Controller
         
 
         foreach($facture->produits as $f){
-            $price = $f->unit_price *  $f->qty ;
+            $price = $f->unit_price  ;
             $priceTotal = $priceTotal + $price;
             }
             return  $priceTotal;

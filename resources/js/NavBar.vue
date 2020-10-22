@@ -14,6 +14,25 @@
                 
                    <router-link class="nav-link" :to="ad" v-if="logged && admin" >Administration</router-link>
                 </li>
+
+                   <li class="nav-item">
+                    
+                   <router-link class="nav-link" :to="ad" v-if="logged && admin" >Gestion de stock</router-link>
+                </li>
+
+                      <li class="nav-item">
+                    
+                   <router-link class="nav-link" :to="Produit" v-if="logged && admin" >List des produits </router-link>
+                </li>
+                
+                
+    
+
+
+
+  
+                
+                
                  <li class="nav-item">
                   <router-link class="nav-link" :to="budget" >Budget</router-link>
                 </li>
@@ -46,6 +65,7 @@ export default {
             logout : '/logout',
             budget : '/budget',
             ad : '/admin',
+            Produit:'/Produit',
             logged : User.isLogged().logged,
             name : User.isLogged().name,
             admin :User.isadmin()

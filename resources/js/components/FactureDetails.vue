@@ -58,9 +58,8 @@
                                             <th>Date d'achat</th>
 
                                             <th class="right">Prix Unitaire</th>
-                                            <th class="center">Qty</th>
-                                            <th class="right">Total</th>
-                                            <th>Action</th>
+                                          
+                                               <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -85,15 +84,8 @@
                                             <td class="right">
                                                 {{ produit.unit_price }}DA
                                             </td>
-                                            <td class="center">
-                                                {{ produit.qty }}
-                                            </td>
-                                            <td class="right">
-                                                {{
-                                                    produit.unit_price *
-                                                        produit.qty
-                                                }}DA
-                                            </td>
+                                           
+                                         
                                             <td>
                                              
 
@@ -143,7 +135,7 @@
                                                     </strong>
                                                 </td>
                                                 <td class="right">
-                                                    {{ facture.nbr }}
+                                                    {{ facture.produits.length  }}
                                                 </td>
                                             </tr>
                                             <tr>
