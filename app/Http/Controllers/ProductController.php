@@ -105,10 +105,15 @@ class ProductController extends Controller
     public function show($id)
     {
       
-        // dd($id);   
 
-        $product= Product::where('id',$id)->get();
-    return response()->json($product);
+    $product= Product::where('id',$id)->get();
+ 
+   
+    $sum=Product::where('facture_id',$product[0]->facture_id)->sum('unit_price');
+    $facture=$product->facture();
+
+    
+    return response()->json(['product'=>$product,'montant_facture'=>$sum,'facture'=>$facture]);
 
 
         
