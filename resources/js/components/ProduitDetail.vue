@@ -1,238 +1,178 @@
 <template>
     <div>
-        <div class="container ">
-            <div class="row my-4">
-                <div class="container mt-5 text-center">
+        <div class="container">
+            <div class="row my-5">
+                <div class="col-sm-3 mt-4">
                     <div class="card ">
-                        <div class="card-header">
-                            Details Produit
+                        <div class="card-header ">Fournisseur du produit :</div>
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                Nom: {{ fournisseur.title }}
+                            </li>
+
+                            <li class="list-group-item">
+                                Adresse:
+                                {{ fournisseur.adresse }}
+                            </li>
+                            <li class="list-group-item">
+                                Email: {{ fournisseur.email }}
+                            </li>
+                            <li class="list-group-item">
+                                Phone:
+                                {{ fournisseur.telephone }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 mt-4">
+                    <div class="card">
+                        <div class="card-header ">
+                            Information sur le produit :
                         </div>
-
                         <div class="card-body">
-                            <form
-                                @submit="updatefacture"
-                                enctype="multipart/form-data"
-                            >
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span
-                                            class="input-group-text"
-                                            id="basic-addon1"
-                                            >Code Produit</span
-                                        >
-                                    </div>
-                                    <div class="input-group-append">
-                                        <span
-                                            class="input-group-text"
-                                            id="basic-addon2"
-                                            >{{ code_produit }}</span
-                                        >
-                                    </div>
-                                </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    Code produit : {{ code_produit }}
+                                </li>
 
+                                <li class="list-group-item">
+                                    Description du produit : {{ description }}
+                                </li>
+
+                                <li class="list-group-item">
+                                    Date achat:
+                                    {{ date }}
+                                </li>
+                                <li class="list-group-item">
+                                    code facture: {{ facture.facture_code }}
+                                </li>
+                                <li class="list-group-item">
+                                    Date facture:
+                                    {{ facture.date }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 ">
+                    <div class="card">
+                        <div class="card-header">
+                            FICHE DE SORTIE
+                        </div>
+                        <div v-if="File">
+                         <div  class="card-body">
                            
 
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span
-                                            class="input-group-text"
-                                            id="basic-addon1"
-                                            >Fournisseur</span
-                                        >
-                                    </div>
+                     <ul class="list-group list-group-flush">
 
-                                    <select
-                                        class="custom-select"
-                                        id="inputGroupSelect01"
-                                        v-model="fournisseur_id"
-                                    >
-                                        <option
-                                            v-for="(F, index) in Fournisseur"
-                                            :value="F.id"
-                                            v-bind:key="index"
-                                        >
-                                            {{ F.title }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span
-                                            class="input-group-text"
-                                            id="basic-addon1"
-                                            >Description</span
-                                        >
-                                    </div>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        placeholder="Details"
-                                        aria-label="Details"
-                                        aria-describedby="basic-addon1"
-                                        v-model="description"
-                                    />
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span
-                                            class="input-group-text"
-                                            id="basic-addon1"
-                                            >Pièce dépense</span
-                                        >
-                                    </div>
+                       <li class="list-group-item">
+                                    Code du siege receptionnaire   :
+                                    {{ structure }}
+                                </li>
+                            <li class="list-group-item">
 
-                                    <div class="file-field">
-                                        <div
-                                            class="btn btn-primary btn-sm float-left"
-                                        >
-                                            <span>Choose file</span>
-                                            <input
-                                                type="file"
-                                                @change="ondepencechange"
-                                                name="piece_d"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                                     <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span
-                                            class="input-group-text"
-                                            id="basic-addon1"
-                                            >Piece Depense</span
-                                        >
-                                    </div>
-                                 <iframe
-                                    :src=piece
-                                    frameBorder="0"
-                                    width="700"
-                                    height="500"
-                                ></iframe>
-                                </div>
-     
-                                
+                           
+                              <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-toggle="modal"
+                                data-target="#aff_produit"
+                            >
+                                Modifier affectation produit
+                            </button>
+                            </li>
 
-                                <div class="modal-footer">
-                                    <button
-                                        type="submit"
-                                        class="btn btn-primary"
-                                    >
-                                        Save changes
-                                    </button>
-                                </div>
-                            </form>
+                            
+                        </ul>
+                         </div>
+                            <pdf :src="File"></pdf>
+                        </div>
+                        <div v-else class="card-body">
+                         <ul class="list-group list-group-flush">
+
+                          <li class="list-group-item">
+                        
+                            <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-toggle="modal"
+                                data-target="#aff_produit"
+                            >
+                                Affecter produit
+                            </button>
+                            </li>
+
+                         </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <aff_produit />
     </div>
 </template>
 
 <script>
+import pdf from "vue-pdf";
+import aff_produit from "./affecter_produit";
 export default {
     data() {
         return {
-            facture: {},
-            piece:'',
+            facture: "",
+            piece: "",
             code_produit: "",
             title: "",
             date: "",
-            prix:"",
-            montant_global:"",
-            fournisseur_id: "",
+            prix: "",
+            montant_global: "",
+            fournisseur: "",
             description: "",
-            Fournisseur: "",
-            piece_d: ""
+            fournisseur: "",
+            structure: "",
+            etat_affectation: "0",
+            Fiche_mouvement: "",
+            File: ""
         };
     },
 
+    components: {
+        aff_produit: aff_produit,
+        pdf: pdf
+    },
+
     methods: {
-        updatefacture(e) {
-            e.preventDefault();
-            const config = {
-                headers: { "Content-Type": "multipart/form-data" }
-            };
-            let formData = new FormData();
-
-            formData.append("piece_d", this.piece_d);
-            formData.append("code_facture", this.code_facture);
-            formData.append("date", this.date);
-            formData.append("fournisseur_id", this.fournisseur_id);
-            formData.append("description", this.description);
-            formData.append("_method", "put");
-
-            axios
-                .post(`/api/facture/${this.$route.params.id}`, formData, config)
-                .then(response => {
-                    //console.log(response);
-
-                    Swal.fire({
-                        position: "center ",
-                        icon: "success",
-                        title: "Facture Modifiée",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-
-                    this.$router.push({ name: "adminPanel" });
-                    this.$emit("add-fac");
-                    //   $("#addFacture").modal("hide");
-                    this.code_facture = "";
-                    this.date = "";
-                    this.fournisseur_id = "";
-                    this.description = "";
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-            /*      axios
-                .post("/api/facture", {
-                    id_facture: this.code_facture,
-                    date: this.date,
-                    fournisseur_id: this.fournisseur_id,
-                    description: this.description
-                })
-                .then(response => {
-                    //console.log(response);
-                    this.$emit("add-fac", response);
-                    (this.code_facture = ""),
-                        (this.date = ""),
-                        (this.fournisseur_id = ""),
-                        (this.description = "");
-                })
-                .catch(error => {
-                    console.log(error);
-                });*/
-        },
-
         getProduit() {
             axios
                 .get(`/api/produit/${this.$route.params.id}`)
                 .then(response => {
                     console.log(response.data);
-                   this.detail = response.data;
-                    this.code_produit = this.detail.product['0'].code;
-                     this.description = this.detail.product['0'].description;
-                   this.date = this.detail.product['0'].date_achat;
-                   this.prix =this.detail.product['0'].unit_price;
-                   this.montant_global =this.detail.montant_facture;
+                    this.detail = response.data;
+                    this.code_produit = this.detail.product["0"].code;
+                    this.description = this.detail.product["0"].description;
+                    this.date = this.detail.product["0"].date_achat;
+                    this.prix = this.detail.product["0"].unit_price;
+                    this.montant_global = this.detail.montant_facture;
+                    this.facture = this.detail.product["0"].facture;
+                    this.fournisseur = this.detail.product["0"].fournisseur;
+                    this.structure = this.detail.product["0"].structure;
+                    this.File = this.detail.product["0"].file;
 
-                 //   this.title = this.facture.fournisseur.title;
-                   
-                 //   this.fournisseur_id = this.facture.fournisseur.id;
-                 //   this.piece='/'+this.facture.piece_depence;
+                    //   this.title = this.facture.fournisseur.title;
+
+                    //   this.fournisseur_id = this.facture.fournisseur.id;
+                    //   this.piece='/'+this.facture.piece_depence;
                 })
                 .catch(error => {
                     console.log(error);
                 });
         },
 
-   
-
-        ondepencechange(event) {
+        onchangefichemouvement(event) {
             console.log(event.target.files[0]);
-            this.piece_d = event.target.files[0];
+            this.Fiche_mouvement = event.target.files[0];
         }
     },
 

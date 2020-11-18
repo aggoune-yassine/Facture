@@ -18,7 +18,8 @@ class Facture extends Model
 
     'fournisseur_id',
     'description',
-    'piece_depence',
+    'Piece_depense',
+    
 
     'date',
     'created_at',

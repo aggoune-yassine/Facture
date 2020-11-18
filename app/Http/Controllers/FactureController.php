@@ -18,22 +18,48 @@ class FactureController extends Controller
     public function index()
     {
         //
+       // dd('index');
+        
+        if (request('q') != null) {
+
+
+
+            $factures['data'] = Facture::where('facture_code', 'like', '%' . request('q') . '%')->get();
+
+            foreach ($factures['data'] as $facture) {
+
+
+                $facture->setattribute('produits', $facture->produits);
+
+                foreach ($facture->produits as $produit) {
+                    # code...
+                    $produit->setattribute('created', $produit->created_at->diffForHumans());
+                }
+
+                $facture->setattribute('user', $facture->user);
+                $facture->setattribute('created', $facture->created_at->diffForHumans());
+            }
+
+
+            return response()->json($factures);
+        }
+
         Carbon::setLocale('fr');
         $factures = Facture::latest()->paginate('2');
 
         foreach ($factures as $facture) {
 
-           
 
-           $facture->setattribute('produits',$facture->produits);
 
-           foreach ($facture->produits as $produit) {
-               # code...
-               $produit->setattribute('created',$produit->created_at->diffForHumans());
-           }
+            $facture->setattribute('produits', $facture->produits);
 
-            $facture->setattribute('user',$facture->user);
-            $facture->setattribute('created',$facture->created_at->diffForHumans());
+            foreach ($facture->produits as $produit) {
+                # code...
+                $produit->setattribute('created', $produit->created_at->diffForHumans());
+            }
+
+            $facture->setattribute('user', $facture->user);
+            $facture->setattribute('created', $facture->created_at->diffForHumans());
         }
 
 
@@ -59,38 +85,27 @@ class FactureController extends Controller
      */
     public function store(Request $request)
     {
-     $name=null;
-        if($request->hasFile('piece_d'))
-        {
-           // dd($request->piece_d);
+        
+        Facture::create([
 
-            $name=$request->code_facture.'.'.$request->piece_d->getClientOriginalExtension();
-           $request->piece_d->move(public_path('piece_depense'),$name);
-
-        }
-
-        $url=explode('/',url()->current());
-    //  dd($url);
-       Facture::create([
-            
             'user_id' => $request->user_id,
             'facture_code' => $request->code_facture,
 
             'fournisseur_id' => $request->fournisseur_id,
             'description' => $request->description,
-            'piece_depence' => 'piece_depense/'.$name,
+           
 
             'date' => $request->date,
 
 
 
         ]);
-       $facture = Facture::orderBy('id', 'desc')->get();
+        $facture = Facture::orderBy('id', 'desc')->get();
 
 
        return response()->json($facture);
 
-       // dd($name);
+        // dd($name);
     }
 
     /**
@@ -102,34 +117,34 @@ class FactureController extends Controller
     public function show(Facture $facture)
     {
         //
-   
-           
-      //dd($facture);
-       // $facture->produits->sum('unit_price');
-
-       foreach ( $facture->produits as $produit)
-       {
-         $produit->setattribute('budget',$produit->budget);
-       }
-       
-       $facture->setattribute('produits',$facture->produits);
+       // dd('show');
 
 
-       $facture->setattribute('fournisseur',$facture->fournisseur);
-       $facture->setattribute('total', $this->refresh($facture));
-       //$facture->setattribute('nbr',$facture->produits->sum('qty'));
+        //dd($facture);
+        // $facture->produits->sum('unit_price');
 
-   
-        
+        foreach ($facture->produits as $produit) {
+            $produit->setattribute('budget', $produit->budget);
+        }
+
+        $facture->setattribute('produits', $facture->produits);
+
+
+        $facture->setattribute('fournisseur', $facture->fournisseur);
+        $facture->setattribute('total', $this->refresh($facture));
+        //$facture->setattribute('nbr',$facture->produits->sum('qty'));
+
+
+
 
         return response()->json(
             $facture
-           
-         //   'fournisseur'=>$facture->fournisseur,
-         //   'total'=> $this->refresh($facture),
-         //   'nbr'=>$facture->produits->sum('qty')
-            
-            
+
+            //   'fournisseur'=>$facture->fournisseur,
+            //   'total'=> $this->refresh($facture),
+            //   'nbr'=>$facture->produits->sum('qty')
+
+
         );
     }
 
@@ -168,39 +183,24 @@ class FactureController extends Controller
     public function update(Request $request, Facture $facture)
     {
 
+       
+        if ($request->hasFile('Piece_depense'))
+        {  
+           
+  
+        $facture->update([
 
-      
-      $name=$facture->facture_code.'.pdf';
-        if($request->hasFile('piece_d'))
-        {
-           // dd($request->piece_d);
-
-            $name=$request->code_facture.'.'.$request->piece_d->getClientOriginalExtension();
-           $request->piece_d->move(public_path('piece_depense'),$name);
-
+            'Piece_depense' => 'piece_depense/' . $facture->facture_code.'.pdf' ]);
+        
+        
+            $this->Ajouter_fichier($request->Piece_depense,'piece_depense',$facture->facture_code);
         }
-
-        $url=explode('/',url()->current());
-    //  dd($url);
-       $facture->update([
-            
-            'user_id' => '1',
-            'facture_code' => $request->code_facture,
-
-            'fournisseur_id' => $request->fournisseur_id,
-            'description' => $request->description,
-            'piece_depence' => 'piece_depense/'.$name,
-
-            'date' => $request->date,
+   
+  
+        $facture = Facture::orderBy('id', 'desc')->get();
 
 
-
-        ]);
-       $facture = Facture::orderBy('id', 'desc')->get();
-
-
-       return response()->json($facture);
-
+        return response()->json($facture);
     }
 
     /**
@@ -214,22 +214,32 @@ class FactureController extends Controller
 
         ///dd($facture);
         //
-       // Facture::delete();
-      //  Facture::where('id', $facture->id)->delete();
-   
+        // Facture::delete();
+        //  Facture::where('id', $facture->id)->delete();
+
         File::delete($facture->piece_depence);
         $facture->delete();
     }
     public  function refresh(Facture $facture)
     {
-        $priceTotal=0;
-        
+        $priceTotal = 0;
 
-        foreach($facture->produits as $f){
-            $price = $f->unit_price  ;
+
+        foreach ($facture->produits as $f) {
+            $price = $f->unit_price;
             $priceTotal = $priceTotal + $price;
-            }
-            return  $priceTotal;
+        }
+        return  $priceTotal;
+    }
 
+
+    public function Ajouter_fichier( $file ,$dossier,$code)
+    
+    {
+
+
+     
+       
+       $file->move(public_path($dossier), $code.'.pdf');
     }
 }

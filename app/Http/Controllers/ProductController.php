@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use Carbon\Carbon;
-
 use App\Facture;
+
 use App\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -107,13 +108,20 @@ class ProductController extends Controller
       
 
     $product= Product::where('id',$id)->get();
- 
-   
-    $sum=Product::where('facture_id',$product[0]->facture_id)->sum('unit_price');
-    $facture=$product->facture();
 
     
-    return response()->json(['product'=>$product,'montant_facture'=>$sum,'facture'=>$facture]);
+     foreach($product as $p)
+
+     {
+       
+        $p->setattribute('facture',$p->facture);
+        $p->setattribute('fournisseur',$p->facture->fournisseur);
+
+     }
+ 
+    $sum=Product::where('facture_id',$product[0]->facture_id)->sum('unit_price');
+
+    return response()->json(['product'=>$product,'montant_facture'=>$sum]);
 
 
         
@@ -140,7 +148,27 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         //
-    }
+    
+    //dd($request->file->getClientOriginalName());
+
+    //dd($product);
+
+   //$name=$product->id.$request->file->getClientOriginalExtension();
+  
+   if(($request->hasFile('file')))
+   {
+
+
+    
+
+
+   $name=$product->id.'.pdf';
+      $request->file->move(public_path('fiche_mouvement'),$name);
+      $product->update(['file'=>'/fiche_mouvement/'.$name,'structure'=>$request->structure]);
+    //Storage::put('/fiche_mouvement/file.pdf', $request->file);
+     
+ //  Product::where('id',$product->id)->update(['file'=>$request->file],['structure'=>$request->structure]);
+} }
 
     /**
      * Remove the specified resource from storage.

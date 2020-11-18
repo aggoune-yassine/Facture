@@ -187,7 +187,7 @@ export default {
             getfacture(){ 
              
         axios
-            .get(`/api/facture/${this.$route.params.id}`)
+            .get(`/api/facture/show/${this.$route.params.id}`)
             .then(response => {
                 console.log(response);
                 this.facture = response.data;

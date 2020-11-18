@@ -15,7 +15,7 @@ import product from '../components/ProduitDetail.vue'
 
 Vue.use(VueRouter)
 
-const routes = [{  
+const routes = [{
 
         path: '/',
         component: Home,

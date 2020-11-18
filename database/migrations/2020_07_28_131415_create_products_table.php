@@ -22,6 +22,9 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->unsignedInteger('date_achat');
             $table->double('unit_price',14,2)->unsigned();
+            $table->string('file',100)->nullable();
+            $table->string('structure',10)->nullable();
+
           //  $table->integer('qty')->unsigned();
            
           

@@ -10,13 +10,15 @@ class Product extends Model
 {
     //
     protected $fillable = [
-      //  'id',
+        'id',
         'code',
         'facture_id',
         'description',
         'date_achat',
         'unit_price',
        // 'qty',
+        'file',
+        'structure',
         'budget_id'
     ];
     public function facture()

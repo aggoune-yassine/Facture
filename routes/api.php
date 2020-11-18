@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +17,13 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::apiResource('facture','FactureController');
+//Route::apiResource('facture','FactureController');
+Route::get('facture/{q?}','FactureController@index' );
+Route::POST('facture','FactureController@store' );
+Route::PUT('facture/{facture}','FactureController@update' );
+Route::get('facture/show/{facture}','FactureController@show' );
+
+//Route::get('facture/edit/{id}','FactureController@edit' );
 //Route::get('facture/edit/{id}','FactureController@show');
 Route::apiResource('Fournisseur','FrournisseurController');
 Route::post('users/register','UsersController@register');
@@ -24,5 +31,10 @@ Route::post('users/login','UsersController@login');
 
 //Route::apiResource('produit','ProductController');
 //Route::post('produit','ProductController@store');
-Route::apiResource('produit','ProductController');
+Route::post('produit','ProductController@store' );
+Route::get('produit','ProductController@index' );
+Route::get('produit/{id}','ProductController@show' );
+Route::PUT('produit/{product}','ProductController@update');
+
+//Route::PUT('product/{id}','ProductController@update');
 Route::apiResource('budget','BudgetController');
