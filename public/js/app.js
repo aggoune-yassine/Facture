@@ -2962,13 +2962,64 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       facture: {},
-      piece: '',
+      piece: "",
       code_facture: "",
       title: "",
       date: "",
@@ -2977,8 +3028,8 @@ __webpack_require__.r(__webpack_exports__);
       Fournisseur: "",
       piece_d: "",
       show: true,
-      pdfList: ['', '/fiche_mouvement/3.pdf', 'https://cdn.rawgit.com/mozilla/pdf.js/c6e8ca86/test/pdfs/freeculture.pdf', 'https://cdn.rawgit.com/mozilla/pdf.js/c6e8ca86/test/pdfs/annotation-link-text-popup.pdf', 'https://cdn.rawgit.com/mozilla/pdf.js/c6e8ca86/test/pdfs/calrgb.pdf', 'https://cdn.rawgit.com/sayanee/angularjs-pdf/68066e85/example/pdf/relativity.protected.pdf', 'data:application/pdf;base64,JVBERi0xLjUKJbXtrvsKMyAwIG9iago8PCAvTGVuZ3RoIDQgMCBSCiAgIC9GaWx0ZXIgL0ZsYXRlRGVjb2RlCj4+CnN0cmVhbQp4nE2NuwoCQQxF+/mK+wMbk5lkHl+wIFislmIhPhYEi10Lf9/MVgZCAufmZAkMppJ6+ZLUuFWsM3ZXxvzpFNaMYjEriqpCtbZSBOsDzw0zjqPHZYtTrEmz4eto7/0K54t7GfegOGCBbBdDH3+y2zsMsVERc9SoRkXORqKGJupS6/9OmMIUfgypJL4KZW5kc3RyZWFtCmVuZG9iago0IDAgb2JqCiAgIDEzOAplbmRvYmoKMiAwIG9iago8PAogICAvRXh0R1N0YXRlIDw8CiAgICAgIC9hMCA8PCAvQ0EgMC42MTE5ODcgL2NhIDAuNjExOTg3ID4+CiAgICAgIC9hMSA8PCAvQ0EgMSAvY2EgMSA+PgogICA+Pgo+PgplbmRvYmoKNSAwIG9iago8PCAvVHlwZSAvUGFnZQogICAvUGFyZW50IDEgMCBSCiAgIC9NZWRpYUJveCBbIDAgMCA1OTUuMjc1NTc0IDg0MS44ODk3NzEgXQogICAvQ29udGVudHMgMyAwIFIKICAgL0dyb3VwIDw8CiAgICAgIC9UeXBlIC9Hcm91cAogICAgICAvUyAvVHJhbnNwYXJlbmN5CiAgICAgIC9DUyAvRGV2aWNlUkdCCiAgID4+CiAgIC9SZXNvdXJjZXMgMiAwIFIKPj4KZW5kb2JqCjEgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzCiAgIC9LaWRzIFsgNSAwIFIgXQogICAvQ291bnQgMQo+PgplbmRvYmoKNiAwIG9iago8PCAvQ3JlYXRvciAoY2Fpcm8gMS4xMS4yIChodHRwOi8vY2Fpcm9ncmFwaGljcy5vcmcpKQogICAvUHJvZHVjZXIgKGNhaXJvIDEuMTEuMiAoaHR0cDovL2NhaXJvZ3JhcGhpY3Mub3JnKSkKPj4KZW5kb2JqCjcgMCBvYmoKPDwgL1R5cGUgL0NhdGFsb2cKICAgL1BhZ2VzIDEgMCBSCj4+CmVuZG9iagp4cmVmCjAgOAowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDA1ODAgMDAwMDAgbiAKMDAwMDAwMDI1MiAwMDAwMCBuIAowMDAwMDAwMDE1IDAwMDAwIG4gCjAwMDAwMDAyMzAgMDAwMDAgbiAKMDAwMDAwMDM2NiAwMDAwMCBuIAowMDAwMDAwNjQ1IDAwMDAwIG4gCjAwMDAwMDA3NzIgMDAwMDAgbiAKdHJhaWxlcgo8PCAvU2l6ZSA4CiAgIC9Sb290IDcgMCBSCiAgIC9JbmZvIDYgMCBSCj4+CnN0YXJ0eHJlZgo4MjQKJSVFT0YK'],
-      src: '',
+      pdfList: ["", "/fiche_mouvement/3.pdf", "storage/Bon_de_commande/23.pdf", "https://cdn.rawgit.com/mozilla/pdf.js/c6e8ca86/test/pdfs/annotation-link-text-popup.pdf", "https://cdn.rawgit.com/mozilla/pdf.js/c6e8ca86/test/pdfs/calrgb.pdf", "https://cdn.rawgit.com/sayanee/angularjs-pdf/68066e85/example/pdf/relativity.protected.pdf", "data:application/pdf;base64,JVBERi0xLjUKJbXtrvsKMyAwIG9iago8PCAvTGVuZ3RoIDQgMCBSCiAgIC9GaWx0ZXIgL0ZsYXRlRGVjb2RlCj4+CnN0cmVhbQp4nE2NuwoCQQxF+/mK+wMbk5lkHl+wIFislmIhPhYEi10Lf9/MVgZCAufmZAkMppJ6+ZLUuFWsM3ZXxvzpFNaMYjEriqpCtbZSBOsDzw0zjqPHZYtTrEmz4eto7/0K54t7GfegOGCBbBdDH3+y2zsMsVERc9SoRkXORqKGJupS6/9OmMIUfgypJL4KZW5kc3RyZWFtCmVuZG9iago0IDAgb2JqCiAgIDEzOAplbmRvYmoKMiAwIG9iago8PAogICAvRXh0R1N0YXRlIDw8CiAgICAgIC9hMCA8PCAvQ0EgMC42MTE5ODcgL2NhIDAuNjExOTg3ID4+CiAgICAgIC9hMSA8PCAvQ0EgMSAvY2EgMSA+PgogICA+Pgo+PgplbmRvYmoKNSAwIG9iago8PCAvVHlwZSAvUGFnZQogICAvUGFyZW50IDEgMCBSCiAgIC9NZWRpYUJveCBbIDAgMCA1OTUuMjc1NTc0IDg0MS44ODk3NzEgXQogICAvQ29udGVudHMgMyAwIFIKICAgL0dyb3VwIDw8CiAgICAgIC9UeXBlIC9Hcm91cAogICAgICAvUyAvVHJhbnNwYXJlbmN5CiAgICAgIC9DUyAvRGV2aWNlUkdCCiAgID4+CiAgIC9SZXNvdXJjZXMgMiAwIFIKPj4KZW5kb2JqCjEgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzCiAgIC9LaWRzIFsgNSAwIFIgXQogICAvQ291bnQgMQo+PgplbmRvYmoKNiAwIG9iago8PCAvQ3JlYXRvciAoY2Fpcm8gMS4xMS4yIChodHRwOi8vY2Fpcm9ncmFwaGljcy5vcmcpKQogICAvUHJvZHVjZXIgKGNhaXJvIDEuMTEuMiAoaHR0cDovL2NhaXJvZ3JhcGhpY3Mub3JnKSkKPj4KZW5kb2JqCjcgMCBvYmoKPDwgL1R5cGUgL0NhdGFsb2cKICAgL1BhZ2VzIDEgMCBSCj4+CmVuZG9iagp4cmVmCjAgOAowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDA1ODAgMDAwMDAgbiAKMDAwMDAwMDI1MiAwMDAwMCBuIAowMDAwMDAwMDE1IDAwMDAwIG4gCjAwMDAwMDAyMzAgMDAwMDAgbiAKMDAwMDAwMDM2NiAwMDAwMCBuIAowMDAwMDAwNjQ1IDAwMDAwIG4gCjAwMDAwMDA3NzIgMDAwMDAgbiAKdHJhaWxlcgo8PCAvU2l6ZSA4CiAgIC9Sb290IDcgMCBSCiAgIC9JbmZvIDYgMCBSCj4+CnN0YXJ0eHJlZgo4MjQKJSVFT0YK"],
+      src: "",
       loadedRatio: 0,
       page: 1,
       numPages: 0,
@@ -3045,6 +3096,17 @@ __webpack_require__.r(__webpack_exports__);
               console.log(error);
           });*/
     },
+    supprime: function supprime() {
+      axios["delete"]('/api/facture/deletefile/' + this.$route.params.id, {
+        params: {
+          src: this.src
+        }
+      }).then(function (response) {})["catch"](function (error) {});
+    },
+    refresh: function refresh() {
+      this.getFournisseur();
+      this.getFacture();
+    },
     getFacture: function getFacture() {
       var _this2 = this;
 
@@ -3056,7 +3118,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.title = _this2.facture.fournisseur.title;
         _this2.description = _this2.facture.description;
         _this2.fournisseur_id = _this2.facture.fournisseur.id;
-        _this2.piece = '/' + _this2.facture.piece_depence;
+        _this2.piece = "/" + _this2.facture.piece_depence;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3091,6 +3153,13 @@ __webpack_require__.r(__webpack_exports__);
     this.getFournisseur();
     this.getFacture();
   }
+  /*   mounted() {
+      // alert("qsdqsdqs");
+      this.getFournisseur();
+      this.getFacture();
+  },
+  */
+
 });
 
 /***/ }),
@@ -4014,9 +4083,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4035,6 +4101,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updatefacture: function updatefacture(e) {
+      var _this = this;
+
       e.preventDefault();
       var config = {
         headers: {
@@ -4055,7 +4123,22 @@ __webpack_require__.r(__webpack_exports__);
       formData.append("proforma", this.proforma1);
       formData.append("code_facture", this.code_facture);
       formData.append("user_id", User.isLogged().id);
-      axios.post("/api/facture/".concat(this.$route.params.id), formData, config).then(function (response) {//console.log(response);
+      axios.post("/api/facture/".concat(this.$route.params.id), formData, config).then(function (response) {
+        //console.log(response);
+        Swal.fire({
+          position: "center ",
+          icon: "success",
+          title: "Les fichiers sont ajoutés avec succès ",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        $("#addfile").modal("hide");
+        _this.code_facture = "";
+        _this.date = "";
+        _this.fournisseur_id = "";
+        _this.description = "";
+        _this.Piece_depense1 = "", _this.facture1 = "", _this.Bon_de_livraison1 = "", _this.Ordre_de_service1 = "", _this.Bon_de_commande1 = "", _this.Caution1 = "", _this.Pv_reception_provisoire1 = "", _this.Pv_de_reception1 = "", _this.Contrat1 = "", _this.proforma1 = "", // this.$router.push({ name: 'edit_facture',params: {id:5} })
+        _this.$emit("add-file");
       })["catch"](function (error) {
         console.log(error);
       });
@@ -78172,27 +78255,12 @@ var render = function() {
             _c("div", { staticClass: "card " }, [
               _c("div", { staticClass: "card-header" }, [
                 _vm._v(
-                  "\n                            Modifier & edit Facture\n                        "
+                  "\n                        Modifier & edit Facture\n                    "
                 )
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary",
-                    attrs: {
-                      type: "submit",
-                      "data-toggle": "modal",
-                      "data-target": "#addfile"
-                    }
-                  },
-                  [
-                    _vm._v(
-                      "\n                                        Ajouter les pieces\n                                    "
-                    )
-                  ]
-                ),
+                _vm._m(0),
                 _vm._v(" "),
                 _c(
                   "form",
@@ -78202,7 +78270,7 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "input-group mb-3" }, [
-                      _vm._m(0),
+                      _vm._m(1),
                       _vm._v(" "),
                       _c("div", { staticClass: "input-group-append" }, [
                         _c(
@@ -78217,7 +78285,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group mb-3" }, [
-                      _vm._m(1),
+                      _vm._m(2),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -78243,7 +78311,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group mb-3" }, [
-                      _vm._m(2),
+                      _vm._m(3),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -78280,9 +78348,9 @@ var render = function() {
                             { key: index, domProps: { value: F.id } },
                             [
                               _vm._v(
-                                "\n                                            " +
+                                "\n                                        " +
                                   _vm._s(F.title) +
-                                  "\n                                        "
+                                  "\n                                    "
                               )
                             ]
                           )
@@ -78292,7 +78360,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group mb-3" }, [
-                      _vm._m(3),
+                      _vm._m(4),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -78322,35 +78390,14 @@ var render = function() {
                       })
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "input-group mb-3" }, [
-                      _vm._m(4),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "file-field" }, [
-                        _c(
-                          "div",
-                          { staticClass: "btn btn-primary btn-sm float-left" },
-                          [
-                            _c("span", [_vm._v("Choose file")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              attrs: { type: "file", name: "piece_d" },
-                              on: { change: _vm.ondepencechange }
-                            })
-                          ]
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(5),
-                    _vm._v(" "),
-                    _vm._m(6)
+                    _vm._m(5)
                   ]
                 )
               ])
             ])
           ]),
           _vm._v(" "),
-          _c("addfile")
+          _c("addfile", { on: { "add-file": _vm.refresh } })
         ],
         1
       ),
@@ -78403,7 +78450,7 @@ var render = function() {
                 expression: "src"
               }
             ],
-            staticStyle: { width: "30em" },
+            staticClass: "browser-default custom-select",
             on: {
               change: function($event) {
                 var $$selectedVal = Array.prototype.filter
@@ -78420,12 +78467,79 @@ var render = function() {
               }
             }
           },
-          _vm._l(_vm.pdfList, function(item) {
-            return _c("option", {
-              domProps: { value: item, textContent: _vm._s(item) }
-            })
-          }),
-          0
+          [
+            _vm.facture.Piece_depense
+              ? _c(
+                  "option",
+                  { domProps: { value: _vm.facture.Piece_depense } },
+                  [_vm._v("Piece depense")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.facture.facture
+              ? _c("option", { domProps: { value: _vm.facture.facture } }, [
+                  _vm._v("facture")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.facture.Bon_de_livraison
+              ? _c(
+                  "option",
+                  { domProps: { value: _vm.facture.Bon_de_livraison } },
+                  [_vm._v("Bon_de_livraison")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.facture.Ordre_de_service
+              ? _c(
+                  "option",
+                  { domProps: { value: _vm.facture.Ordre_de_service } },
+                  [_vm._v("Ordre de service")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.facture.Bon_de_commande
+              ? _c(
+                  "option",
+                  { domProps: { value: _vm.facture.Bon_de_commande } },
+                  [_vm._v("\n                    Bon de commande")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.facture.Caution
+              ? _c("option", { domProps: { value: _vm.facture.Caution } }, [
+                  _vm._v("\n                    Caution")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.facture.Pv_reception_provisoire
+              ? _c(
+                  "option",
+                  { domProps: { value: _vm.facture.Pv_reception_provisoire } },
+                  [_vm._v("\n                    Pv reception provisoire")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.facture.Pv_de_reception
+              ? _c(
+                  "option",
+                  { domProps: { value: _vm.facture.Pv_de_reception } },
+                  [_vm._v("\n                    Pv de reception")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.facture.Contrat
+              ? _c("option", { domProps: { value: _vm.facture.Contrat } }, [
+                  _vm._v("Contrat")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.facture.proforma
+              ? _c("option", { domProps: { value: _vm.facture.proforma } }, [
+                  _vm._v("proforma")
+                ])
+              : _vm._e()
+          ]
         ),
         _vm._v(" "),
         _c("input", {
@@ -78453,41 +78567,57 @@ var render = function() {
             }
           }
         }),
-        _vm._v(" /" + _vm._s(_vm.numPages) + "\n\t\t"),
+        _vm._v("\n            /" + _vm._s(_vm.numPages) + "\n            "),
         _c(
           "button",
           {
+            staticClass: "btn btn-primary",
+            attrs: { type: "button" },
             on: {
               click: function($event) {
                 _vm.rotate += 90
               }
             }
           },
-          [_vm._v("⟳")]
+          [_vm._v("\n                ⟳\n            ")]
         ),
         _vm._v(" "),
         _c(
           "button",
           {
+            staticClass: "btn btn-primary",
+            attrs: { type: "button" },
             on: {
               click: function($event) {
                 _vm.rotate -= 90
               }
             }
           },
-          [_vm._v("⟲")]
+          [_vm._v("\n                ⟲\n            ")]
         ),
         _vm._v(" "),
         _c(
           "button",
           {
+            staticClass: "btn btn-primary",
+            attrs: { type: "button" },
             on: {
               click: function($event) {
                 return _vm.$refs.pdf.print()
               }
             }
           },
-          [_vm._v("imprimer")]
+          [_vm._v("\n                imprimer\n            ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            attrs: { type: "button" },
+            on: { click: _vm.supprime }
+          },
+          [_vm._v("\n                supprimer\n            ")]
         ),
         _vm._v(" "),
         _c(
@@ -78505,7 +78635,13 @@ var render = function() {
                     },
                     style: { width: _vm.loadedRatio * 100 + "%" }
                   },
-                  [_vm._v(_vm._s(Math.floor(_vm.loadedRatio * 100)) + "%")]
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(Math.floor(_vm.loadedRatio * 100)) +
+                        "%\n                "
+                    )
+                  ]
                 )
               : _vm._e(),
             _vm._v(" "),
@@ -78537,6 +78673,35 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group mb-3" }, [
+      _c("div", { staticClass: "input-group-prepend" }, [
+        _c(
+          "span",
+          { staticClass: "input-group-text", attrs: { id: "basic-addon1" } },
+          [_vm._v("Ajouter piece")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "input-group-append" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            attrs: {
+              type: "submit",
+              "data-toggle": "modal",
+              "data-target": "#addfile"
+            }
+          },
+          [_vm._v("\n                            +\n                        ")]
+        )
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -78592,58 +78757,13 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group-prepend" }, [
-      _c(
-        "span",
-        { staticClass: "input-group-text", attrs: { id: "basic-addon1" } },
-        [_vm._v("Pièce dépense")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group mb-3" }, [
-      _c("div", { staticClass: "input-group-prepend" }, [
-        _c(
-          "span",
-          { staticClass: "input-group-text", attrs: { id: "basic-addon1" } },
-          [_vm._v("Piece Depense")]
-        ),
-        _vm._v(" "),
-        _c("input", { attrs: { type: "file", name: "", id: "" } })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          attrs: {
-            type: "submit",
-            "data-toggle": "modal",
-            "data-target": "#addfile"
-          }
-        },
-        [
-          _vm._v(
-            "\n                                        Ajouter les pieces\n                                    "
-          )
-        ]
-      ),
-      _vm._v(" "),
       _c(
         "button",
         { staticClass: "btn btn-primary", attrs: { type: "submit" } },
         [
           _vm._v(
-            "\n                                        Save changes\n                                    "
+            "\n                                    Save changes\n                                "
           )
         ]
       )

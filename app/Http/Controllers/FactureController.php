@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use File;
 use App\Facture;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use DB;
-use File;
+
 
 class FactureController extends Controller
 {
@@ -45,7 +46,7 @@ class FactureController extends Controller
         }
 
         Carbon::setLocale('fr');
-        $factures = Facture::latest()->paginate('2');
+        $factures = Facture::latest()->paginate('4');
 
         foreach ($factures as $facture) {
 
@@ -190,12 +191,114 @@ class FactureController extends Controller
   
         $facture->update([
 
-            'Piece_depense' => 'piece_depense/' . $facture->facture_code.'.pdf' ]);
+            'Piece_depense' => '/storage/piece_depense/' . $facture->facture_code.'.pdf' ]);
         
         
             $this->Ajouter_fichier($request->Piece_depense,'piece_depense',$facture->facture_code);
         }
+     else if ($request->hasFile('facture'))
+        {  
+           
+  
+        $facture->update([
+
+            'facture' => '/storage/facture/' . $facture->facture_code.'.pdf' ]);
+        
+        
+            $this->Ajouter_fichier($request->facture,'facture',$facture->facture_code);
+        }
    
+       if ($request->hasFile('Bon_de_livraison'))
+        {  
+           
+  
+        $facture->update([
+
+            'Bon_de_livraison' => '/storage/Bon_de_livraison/' . $facture->facture_code.'.pdf' ]);
+        
+        
+            $this->Ajouter_fichier($request->Bon_de_livraison,'Bon_de_livraison',$facture->facture_code);
+        }
+        if ($request->hasFile('Ordre_de_service'))
+        {  
+           
+  
+        $facture->update([
+
+            'Ordre_de_service' => '/storage/Ordre_de_service/' . $facture->facture_code.'.pdf' ]);
+        
+        
+            $this->Ajouter_fichier($request->Ordre_de_service,'Ordre_de_service',$facture->facture_code);
+        }
+        if ($request->hasFile('Bon_de_commande'))
+        {  
+           
+  
+        $facture->update([
+
+            'Bon_de_commande' => '/storage/Bon_de_commande/' . $facture->facture_code.'.pdf' ]);
+        
+        
+            $this->Ajouter_fichier($request->Bon_de_commande,'Bon_de_commande',$facture->facture_code);
+        }
+        if ($request->hasFile('Caution'))
+        {  
+           
+  
+        $facture->update([
+
+            'Caution' => '/storage/Caution/' . $facture->facture_code.'.pdf' ]);
+        
+        
+            $this->Ajouter_fichier($request->Caution,'Caution',$facture->facture_code);
+        }
+        if ($request->hasFile('Pv_reception_provisoire'))
+        {  
+           
+  
+        $facture->update([
+
+            'Pv_reception_provisoire' => '/storage/Pv_reception_provisoire/' . $facture->facture_code.'.pdf' ]);
+        
+        
+            $this->Ajouter_fichier($request->Pv_reception_provisoire,'Pv_reception_provisoire',$facture->facture_code);
+        }
+        if ($request->hasFile('Pv_de_reception'))
+        {  
+           
+  
+        $facture->update([
+
+            'Pv_de_reception' => '/storage/Pv_de_reception/' . $facture->facture_code.'.pdf' ]);
+        
+        
+            $this->Ajouter_fichier($request->Pv_de_reception,'Pv_de_reception',$facture->facture_code);
+        }
+
+        if ($request->hasFile('Contrat'))
+        {  
+           
+  
+        $facture->update([
+
+            'Contrat' => '/storage/Contrat/' . $facture->facture_code.'.pdf' ]);
+        
+        
+            $this->Ajouter_fichier($request->Contrat,'Contrat',$facture->facture_code);
+        }
+        if ($request->hasFile('Contrat'))
+        {  
+           
+  
+        $facture->update([
+
+            'Pv_de_reception' => '/storage/Pv_de_reception/' . $facture->facture_code.'.pdf' ]);
+        
+        
+            $this->Ajouter_fichier($request->Contrat,'Pv_de_reception',$facture->facture_code);
+        }
+  
+  
   
         $facture = Facture::orderBy('id', 'desc')->get();
 
@@ -240,6 +343,30 @@ class FactureController extends Controller
 
      
        
-       $file->move(public_path($dossier), $code.'.pdf');
+       $file->move(public_path('storage/'.$dossier), $code.'.pdf');
     }
+
+    public function deletefile( Facture $facture,Request $request){
+     
+
+      //  dd($this->getStringBetween(substr($request->src,8),'/','/'));
+         
+          $facture->update([$this->getStringBetween(substr($request->src,8),'/','/') => null]);
+  
+        File::delete(public_path($request->src));
+   
+
+
+    }
+
+    
+
+function getStringBetween($str,$from,$to)
+{
+    $sub = substr($str, strpos($str,$from)+strlen($from),strlen($str));
+    return substr($sub,0,strpos($sub,$to));
+}
+
+   
+      
 }

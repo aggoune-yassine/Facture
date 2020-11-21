@@ -18,7 +18,22 @@ class Facture extends Model
 
     'fournisseur_id',
     'description',
+    
+
+
+
     'Piece_depense',
+   'facture',
+ 
+   'Bon_de_livraison',
+    'Ordre_de_service',
+   'Bon_de_commande',
+    'Caution',
+   'Pv_reception_provisoire',
+    'Pv_de_reception',
+    'Contrat',
+    'proforma',
+
     
 
     'date',

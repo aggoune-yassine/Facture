@@ -40,9 +40,6 @@
                             @submit="updatefacture"
                             enctype="multipart/form-data"
                         >
-                            
-
-
                             <div class="input-group">
                                 <span class="input-group-text" id="basic-addon1"
                                     >Piece depense</span
@@ -309,7 +306,7 @@ export default {
     data() {
         return {
             code_facture: "",
-           
+
             Piece_depense1: "",
             facture1: "",
             Bon_de_livraison1: "",
@@ -335,7 +332,7 @@ export default {
                  formData.append("_method", "put");
 
 
-              
+
 
             formData.append("Piece_depense", this.Piece_depense1);
             formData.append("facture", this.facture1);
@@ -347,7 +344,7 @@ export default {
             formData.append("Pv_de_reception", this.Pv_de_reception1);
             formData.append("Contrat", this.Contrat1);
             formData.append("proforma", this.proforma1);
-           
+
             formData.append("code_facture", this.code_facture);
 
             formData.append("user_id", User.isLogged().id);
@@ -357,13 +354,40 @@ export default {
                 .then(response => {
                     //console.log(response);
 
+                     Swal.fire({
+                        position: "center ",
+                        icon: "success",
+                        title: "Les fichiers sont ajoutés avec succès ",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    
+                    $("#addfile").modal("hide");
+                    this.code_facture = "";
+                    this.date = "";
+                    this.fournisseur_id = "";
+                    this.description = "";
+                      this.Piece_depense1= "",
+            this.facture1= "",
+            this.Bon_de_livraison1="",
+            this.Ordre_de_service1= "",
+            this.Bon_de_commande1= "",
+            this.Caution1="",
+            this.Pv_reception_provisoire1= "",
+            this.Pv_de_reception1= "",
+
+            this.Contrat1= "",
+            this.proforma1= "",
+           // this.$router.push({ name: 'edit_facture',params: {id:5} })
+            this.$emit("add-file");
+
                 })
                 .catch(error => {
                     console.log(error);
                 });
         },
 
-       
+
 
         Piecedepense(event) {
             this.Piece_depense1 = event.target.files[0];
@@ -398,6 +422,6 @@ export default {
         }
     },
 
-   
+
 };
 </script>

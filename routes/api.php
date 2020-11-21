@@ -22,6 +22,7 @@ Route::get('facture/{q?}','FactureController@index' );
 Route::POST('facture','FactureController@store' );
 Route::PUT('facture/{facture}','FactureController@update' );
 Route::get('facture/show/{facture}','FactureController@show' );
+Route::delete('facture/deletefile/{facture}','FactureController@deletefile');
 
 //Route::get('facture/edit/{id}','FactureController@edit' );
 //Route::get('facture/edit/{id}','FactureController@show');
@@ -35,6 +36,7 @@ Route::post('produit','ProductController@store' );
 Route::get('produit','ProductController@index' );
 Route::get('produit/{id}','ProductController@show' );
 Route::PUT('produit/{product}','ProductController@update');
+
 
 //Route::PUT('product/{id}','ProductController@update');
 Route::apiResource('budget','BudgetController');
