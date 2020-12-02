@@ -58,6 +58,7 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">id</th>
+                                <th scope="col">ajouter au bon d'echarge</th>
                                 <th scope="col">code produit</th>
                                 <th scope="col">description</th>
 
@@ -79,6 +80,11 @@
                                     }}</router-link>
                                 </th>
 
+                                 <td >
+    <input type="checkbox" class="form-check-input center" v-model="tab" :value="p.id" id="exampleCheck1">
+    
+  </td>
+
                                 <td>{{ p.code }}</td>
                                 <td>{{ p.description }}</td>
                                 <td>{{ p.unit_price }}</td>
@@ -89,6 +95,8 @@
                             </tr>
                         </tbody>
                     </table>
+
+                    <button v-on:click='bonadd'>click</button>
 
                     <div class="card-footer d-flex justify-content-center">
                         <pagination
@@ -108,7 +116,8 @@ export default {
         return {
             produits: {},
             q: "",
-            status:''
+            status:'',
+            tab:[],
         };
     },
 
@@ -120,6 +129,7 @@ export default {
                     params: {
                         q:this.q,
                         status:this.status
+                    
 
                     }
                 })
@@ -133,6 +143,29 @@ export default {
           
             //  }
         },
+
+
+        bonadd(){
+                     
+                  axios.get("/api/produit/addbon", {
+                    params: {
+                        tab:this.tab,
+                        id:this.$route.params.structure
+                      
+                    
+
+                    }
+                })
+                .then(response=> {
+                      console.log(response);
+                    this.produits = response.data;
+                })
+                .catch(error=> {
+                     console.log(error);
+                })
+
+
+        },
  
 
  onchange()
@@ -145,7 +178,14 @@ alert('sddscsc');
                 page = 1;
             }
             axios
-                .get("api/produit?page=" + page)
+                .get("/api/produit" ,
+                {
+                    params :{
+                           page:page,
+                          idstructure:this.$route.params.structure,
+                    }
+
+                })
                 .then(response => {
                     console.log(response);
                     this.produits = response.data;
@@ -157,6 +197,8 @@ alert('sddscsc');
     },
 
     created() {
+
+      
         this.getproduit();
     }
 };

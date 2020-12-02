@@ -15,6 +15,7 @@ class Facture extends Model
 
     'facture_code',
     'user_id',
+    'paye',
 
     'fournisseur_id',
     'description',

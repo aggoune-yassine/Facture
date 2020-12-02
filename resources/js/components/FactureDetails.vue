@@ -7,9 +7,16 @@
                         <div class="card-header">
                             Facture
                             <strong>{{ facture.date }}</strong>
-                            <span class="float-right">
+                            <span
+                                v-if="(facture.produits = 0)"
+                                class="float-right"
+                            >
                                 <strong>Status de la facture:</strong>
                                 Payée</span
+                            >
+                            <span v-else class="float-right">
+                                <strong>Status de la facture:</strong>
+                                Non Payée</span
                             >
                         </div>
                         <div class="card-header">
@@ -53,50 +60,46 @@
                                         <tr>
                                             <th class="center">#</th>
                                             <th>Produit</th>
-                                            
+
                                             <th>Ligne Budgetaire</th>
                                             <th>Date d'achat</th>
 
                                             <th class="right">Prix Unitaire</th>
-                                          
-                                               <th>Action</th>
+
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr
-                                            v-for="(produit,
-                                            index) in facture.produits"
+                                            v-for="(produit, index) in produits"
                                             v-bind:key="index"
                                         >
                                             <td class="center">{{ index }}</td>
                                             <td class="left strong">
                                                 {{ produit.description }}
                                             </td>
-                                           
-                                           
-                                             <td class="left">
-                                                {{ produit.budget.ligne_budgetaire }}
+
+                                            <td class="left">
+                                                {{
+                                                    produit.budget
+                                                        .ligne_budgetaire
+                                                }}
                                             </td>
-                                              <td class="left">
+                                            <td class="left">
                                                 {{ produit.date_achat }}
                                             </td>
 
                                             <td class="right">
                                                 {{ produit.unit_price }}DA
                                             </td>
-                                           
-                                         
+
                                             <td>
-                                             
-
-                                            
-
                                                 <a
-                                                    @click='
+                                                    @click="
                                                         supprimerProduit(
-                                                           produit.id
+                                                            produit.id
                                                         )
-                                                    '
+                                                    "
                                                     class="btn  btn-sm btn-danger text-white "
                                                 >
                                                     <i class="fa fa-trash"></i>
@@ -135,7 +138,9 @@
                                                     </strong>
                                                 </td>
                                                 <td class="right">
-                                                    {{ facture.produits.length  }}
+                                                    {{
+                                                        facture.produits.length
+                                                    }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -170,88 +175,84 @@ import addproduit from "./Add_Produit.vue";
 export default {
     data() {
         return {
-            facture: ""
+            facture: "",
+
+            produits: []
         };
     },
 
     created() {
-
-      this.getfacture();
-
-
+        this.getfacture();
     },
 
     methods: {
+        getfacture() {
+            axios
+                .get(`/api/facture/show/${this.$route.params.id}`)
+                .then(response => {
+                    console.log(response);
+                    this.facture = response.data;
 
+                    this.produits = response.data.produits;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
 
-            getfacture(){ 
-             
-        axios
-            .get(`/api/facture/show/${this.$route.params.id}`)
-            .then(response => {
-                console.log(response);
-                this.facture = response.data;
-            })
-            .catch(error => {
-                console.log(error);
-            });
-      },
-
-
-
-      
-       refresh(data) {
+        refresh(data) {
             //  alert(produits.facture);
-         //  this.facture.produits = data.produits;
-         //  this.facture.nbr = data.nbr;
-         //  this.facture.total = data.total;
+            //  this.facture.produits = data.produits;
+            //  this.facture.nbr = data.nbr;
+            //  this.facture.total = data.total;
 
-           this.getfacture();
-       },
-    
-    supprimerProduit(produit){
-      
-        Swal.fire({
-               position: 'center ',
-              icon: 'warning',
-             title: 'Voulez vous supprimer le produit?',
-             showConfirmButton: true,
-             showCancelButton: true,
-             confirmButtonText: 'oui',
-             confirmButtonColor: '#3085D6',
-             cancelButtonText:'Annulé' ,
-             cancelButtonColor:'#d33'
-               
-              }).then(result=>{
+            this.getfacture();
+        },
 
-                  if(result.value)
-                  {   axios.delete(`/api/produit/${produit}`)
-                     
-                      .then(response=> {
+        supprimerProduit(produit) {
             Swal.fire({
-               position: 'center ',
-              icon: 'success',
-             title: 'produit Supprimée',
-             showConfirmButton: false,
-              timer: 1500
-              });
-              this.getfacture();
+                position: "center ",
+                icon: "warning",
+                title: "Voulez vous supprimer le produit?",
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: "oui",
+                confirmButtonColor: "#3085D6",
+                cancelButtonText: "Annulé",
+                cancelButtonColor: "#d33"
+            }).then(result => {
+                if (result.value) {
+                    axios
+                        .delete(`/api/produit/${produit}`)
 
-                      })
-                      .catch(error=> {
-                          console.log(error);
-                      })
-                  }
-                  
-              })
-
-      
-
-    }
+                        .then(response => {
+                            if (response.data.message) {
+                                Swal.fire({
+                                    position: "center ",
+                                    icon: "success",
+                                    title: "produit Supprimé",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            } else {
+                                Swal.fire({
+                                    position: "center ",
+                                    icon: "success",
+                                    title:
+                                        "produit non  Supprimé. Déja affecté",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                            this.getfacture();
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                }
+            });
+        }
     },
-
-
-    
 
     components: { addproduit }
 };

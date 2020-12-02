@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Console\Command;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -40,5 +41,10 @@ class User extends Authenticatable
     public function facture(){
 
         $this->hasMany(Facture::class);
+    }
+
+    public function commande(){
+
+        $this->hasMany(Command::class);
     }
 }

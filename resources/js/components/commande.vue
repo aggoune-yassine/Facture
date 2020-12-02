@@ -3,16 +3,12 @@
         <div class="container ">
             <div class="row my-5">
                 <div class="col-md-12">
-             
-
-
-             
                     <div class="row mt-3">
                         <div class="col">
                             <a
                                 href="#"
                                 data-toggle="modal"
-                                data-target="#addFacture"
+                                data-target="#addCommande"
                                 class="btn mt-5 btn-sm btn-success text-white mb-2"
                             >
                                 <i class="fa fa-plus"></i>
@@ -20,16 +16,16 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group ">
-                                <label for="">Recherche facture</label>
+                                <label for="">Recherche bon commande</label>
                                 <input
                                     type="text"
                                     class="form-control"
                                     name=""
                                     id=""
                                     v-model="q"
-                                    @keyup="searchfacture"
+                                    @keyup="searchcommande"
                                     aria-describedby="helpId"
-                                    placeholder="code facture"
+                                    placeholder="code commande"
                                 />
                             </div>
                         </div>
@@ -38,37 +34,36 @@
                         <thead>
                             <tr>
                                 <th scope="col">id</th>
-                                <th scope="col">Code facture</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Date Facture</th>
+                                <th scope="col">structure</th>
+                              
+                             
                                 <th scope="col">Ajoutée par</th>
                                 <th scope="col">Ajoutée depuis</th>
                                 <th scope="col">Action</th>
+                            
                             </tr>
                         </thead>
                         <tbody>
                             <tr
-                                v-for="(facture, index) in factures.data"
+                                v-for="(commande, index) in commandes.data"
                                 v-bind:key="index"
                             >
                                 <th scope="row">
                                     <router-link
-                                        :to="'facture/' + facture.id"
+                                        :to="'detailcommande/' + commande.id"
                                         >{{ index }}</router-link
                                     >
                                 </th>
-                                <td>{{ facture.facture_code }}</td>
-                                <td>{{ facture.description }}</td>
-                                <td>{{ facture.date }}</td>
-                                <td>{{ facture.user.name }}</td>
-                                <td>{{ facture.created }}</td>
-
-                                <td>
+                             
+                                <td>{{commande.structure.structure}}</td>
+                                <td>{{ commande.user.name}}</td>
+                                <td>{{ commande.created}}</td>
+                                 <td>
                                     <router-link
                                         :to="{
                                             path:
-                                                'facture/edit/' +
-                                                facture.facture_code
+                                                'commande/edit/' +
+                                                commande.id
                                         }"
                                         class="btn mr-1 btn-sm btn-primary"
                                     >
@@ -77,7 +72,7 @@
 
                                     <router-link
                                         :to="{
-                                            path: 'facture/edit/' + facture.id
+                                            path: 'commande/edit/' + commande.id
                                         }"
                                         class="btn mr-1 btn-sm btn-warning"
                                     >
@@ -85,12 +80,14 @@
                                     </router-link>
 
                                     <a
-                                        @click="supprimerfacture(facture.id)"
+                                        @click="supprimercommande(commande.id)"
                                         class="btn  btn-sm btn-danger text-white "
                                     >
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
+                               
+
                             </tr>
                         </tbody>
                     </table>
@@ -103,30 +100,32 @@
                     </div>
                 </div>
             </div>
-            <addfacture @add-fac="refresh()" />
+            <addcommande @add-fac="refresh()" />
         </div>
     </div>
 </template>
 
 <script>
-import addfacture from "./Add_Facture.vue";
+import addcommande from "./Add_Commande.vue";
 export default {
     data() {
         return {
-            factures: {},
+            commandes: [],
             q: "",
            
         };
     },
 
     methods: {
-        searchfacture() {
+        searchcommande() {
          //   if (this.q.length > 3) {
                 axios
-                    .get("api/facture/"+this.q)
+                    .get("api/commande/"+this.q)
                     .then(response => {
                         console.log(response);
-                        this.factures= response.data;
+                        this.commandes= response.data;
+
+                        
 
 
                     })
@@ -136,15 +135,15 @@ export default {
           //  }
         },
 
-        getfacture(page) {
+        getcommande(page) {
             if (typeof page === "undefined") {
                 page = 1;
             }
             axios
-                .get("api/facture?page=" + page)
+                .get("api/commande?page=" + page)
                 .then(response => {
                     console.log(response);
-                    this.factures = response.data;
+                    this.commandes = response.data;
                 })
                 .catch(error => {
                     console.log(error);
@@ -152,9 +151,9 @@ export default {
         },
 
         refresh() {
-            this.getfacture();
+            this.getcommande();
         },
-        supprimerfacture(facture) {
+        supprimercommande() {
             Swal.fire({
                 position: "center ",
                 icon: "warning",
@@ -210,10 +209,10 @@ export default {
     },
 
     components: {
-        addfacture
+        addcommande
     },
     created() {
-        this.getfacture();
+        this.getcommande();
     }
 };
 </script>

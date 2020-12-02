@@ -54,10 +54,31 @@
                                     placeholder="code facture"
                                     aria-label="code facture"
                                     aria-describedby="basic-addon1"
-                                    v-model="code_facture"
+                                    v-model="facture_code"
                                 />
                             </div>
 
+                              <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span
+                                        class="input-group-text"
+                                        id="basic-addon1"
+                                        > Facture payée</span
+                                    >
+                                </div>
+                            <select v-model='paye' class="form-control" id="exampleFormControlSelect1">
+      <option value="0">Oui</option>
+      <option value="1">Non</option>
+    
+    </select>
+                              </div>
+                            <div
+                                v-if="allerros.facture_code"
+                                class="alert alert-danger"
+                                role="alert"
+                            >
+                                {{ allerros.facture_code[0] }}
+                            </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <label
@@ -66,6 +87,7 @@
                                         >Date</label
                                     >
                                 </div>
+
                                 <input
                                     class="form-control"
                                     type="date"
@@ -74,6 +96,13 @@
                                 />
                             </div>
 
+                            <div
+                                v-if="allerros.date"
+                                class="alert alert-danger"
+                                role="alert"
+                            >
+                                {{ allerros.date[0] }}
+                            </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span
@@ -97,6 +126,13 @@
                                     </option>
                                 </select>
                             </div>
+                            <div
+                                v-if="allerros.fournisseur_id"
+                                class="alert alert-danger"
+                                role="alert"
+                            >
+                                {{ allerros.fournisseur_id[0] }}
+                            </div>
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -116,8 +152,14 @@
                                 />
                             </div>
 
+                            <div
+                                v-if="allerros.description"
+                                class="alert alert-danger"
+                                role="alert"
+                            >
+                                {{ allerros.description[0] }}
+                            </div>
 
-                   
                             <div class="modal-footer">
                                 <button
                                     type="button"
@@ -142,12 +184,14 @@
 export default {
     data() {
         return {
-            code_facture: "",
+            facture_code: "",
+            paye:"",
+
             date: "",
             fournisseur_id: "",
             description: "",
             Fournisseur: "",
-
+            allerros: []
         };
     },
 
@@ -159,11 +203,8 @@ export default {
             };
             let formData = new FormData();
 
-              
-
-          
-           
-            formData.append("code_facture", this.code_facture);
+            formData.append("facture_code", this.facture_code);
+            formData.append("paye", this.paye);
             formData.append("date", this.date);
             formData.append("fournisseur_id", this.fournisseur_id);
             formData.append("description", this.description);
@@ -184,13 +225,13 @@ export default {
                     });
                     this.$emit("add-fac");
                     $("#addFacture").modal("hide");
-                    this.code_facture = "";
+                    this.facture_code = "";
                     this.date = "";
                     this.fournisseur_id = "";
                     this.description = "";
                 })
                 .catch(error => {
-                    console.log(error);
+                    this.allerros = error.response.data.errors;
                 });
         },
 

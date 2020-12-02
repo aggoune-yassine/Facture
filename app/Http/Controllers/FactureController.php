@@ -86,17 +86,30 @@ class FactureController extends Controller
      */
     public function store(Request $request)
     {
-        
+
+      $this->validate($request,[
+          'facture_code'=>'required|unique:factures|max:255',
+          'description'=>'required|max:255',
+          'fournisseur_id'=>'required|integer',
+          'paye'=>'required',
+          
+          'date'=>'required|date',
+
+
+      ]
+      
+      );
         Facture::create([
 
             'user_id' => $request->user_id,
-            'facture_code' => $request->code_facture,
+            'facture_code' => $request->facture_code,
 
             'fournisseur_id' => $request->fournisseur_id,
             'description' => $request->description,
            
 
             'date' => $request->date,
+            'paye'=>$request->paye
 
 
 
@@ -118,10 +131,10 @@ class FactureController extends Controller
     public function show(Facture $facture)
     {
         //
-       // dd('show');
+      
 
 
-        //dd($facture);
+        
         // $facture->produits->sum('unit_price');
 
         foreach ($facture->produits as $produit) {
@@ -136,7 +149,7 @@ class FactureController extends Controller
         //$facture->setattribute('nbr',$facture->produits->sum('qty'));
 
 
-
+       
 
         return response()->json(
             $facture
@@ -183,7 +196,16 @@ class FactureController extends Controller
      */
     public function update(Request $request, Facture $facture)
     {
+  
 
+        $facture->update([
+         'paye'=>$request->paye,
+         'fournisseur_id'=>$request->fournisseur_id,
+         'date'=>$request->date
+
+
+        ]);
+  
        
         if ($request->hasFile('Piece_depense'))
         {  
@@ -191,7 +213,7 @@ class FactureController extends Controller
   
         $facture->update([
 
-            'Piece_depense' => '/storage/piece_depense/' . $facture->facture_code.'.pdf' ]);
+            'Piece_depense' => '/storage/Piece_depense/' . $facture->facture_code.'.pdf' ]);
         
         
             $this->Ajouter_fichier($request->Piece_depense,'piece_depense',$facture->facture_code);
@@ -315,13 +337,42 @@ class FactureController extends Controller
     public function destroy(Facture $facture)
     {
 
-        ///dd($facture);
+        //dd($facture);
+
+       if( $facture->produits()->count()==0)
+
+       {
+   $message=true;
+
+        File::delete($facture->Piece_depense);
+        File::delete($facture->facture);
+        File::delete($facture->Bon_de_livraison);
+        File::delete($facture->Ordre_de_service);
+        File::delete($facture->Bon_de_commande);
+        File::delete($facture->Caution);
+        File::delete($facture->Pv_reception_provisoire);
+        File::delete($facture->Pv_de_reception);
+        File::delete($facture->Contrat);
+        File::delete($facture->proforma);
+
+
+    
+        $facture->delete();
+
+       }
+
+       else
+
+       {
+           $message=false;
+       }
+return response()->json(['message'=>$message]);
+
         //
         // Facture::delete();
         //  Facture::where('id', $facture->id)->delete();
 
-        File::delete($facture->piece_depence);
-        $facture->delete();
+      
     }
     public  function refresh(Facture $facture)
     {

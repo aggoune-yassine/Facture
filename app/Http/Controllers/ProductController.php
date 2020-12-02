@@ -20,14 +20,73 @@ class ProductController extends Controller
         //
         
         Carbon::setLocale('fr');
+
+
+        if(request('idstructure'))  {
+
+         
+
+          $produits=Product::where('structure_id','like',request('idstructure'))->whereNull('commande_id')->get();
+       //   return response()->json(['data'=>$produits]);
+
+       foreach( $produits as $produit){
+        $produit->setattribute('created',$produit->created_at->diffForHumans());
+      
+        $produit->setattribute('facture',$produit->facture);
+        $produit->setattribute('user',$produit->facture->user);
+   
+    }
+
+      return response()->json(['data'=>$produits]);
+
+
+        }
+
+       
+        if(request('q') OR request('status') ) 
+
+        {
+          if(empty(request('status')))
+
+          {
+            
+            $produits =Product::where('code','like', '%'.request('q').'%')->
+           
+            
+            get();
+
+          }
+          else 
+          {
+
+         
+
+          $produits =Product::where('code','like', '%'.request('q').'%')->
+          where('status','like',request('status'))
+          ->
+          get();
+        }
+
+          foreach( $produits as $produit){
+            $produit->setattribute('created',$produit->created_at->diffForHumans());
+          
+            $produit->setattribute('facture',$produit->facture);
+            $produit->setattribute('user',$produit->facture->user);
+       
+        }
+
+          return response()->json(['data'=>$produits]);
+        }
         
-        $produits = Product::latest()->paginate('2');
+        $produits = Product::latest()->paginate('4');
         //$produits = Product::all();
 
         foreach( $produits as $produit){
             $produit->setattribute('created',$produit->created_at->diffForHumans());
           
             $produit->setattribute('facture',$produit->facture);
+            $produit->setattribute('user',$produit->facture->user);
+
        
         }
 
@@ -103,25 +162,20 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Product $product)
     {
       
 
-    $product= Product::where('id',$id)->get();
-
+  
     
-     foreach($product as $p)
-
-     {
-       
-        $p->setattribute('facture',$p->facture);
-        $p->setattribute('fournisseur',$p->facture->fournisseur);
-
-     }
+    
+       $fournisseur= $product->facture->fournisseur;
+$facture=$product->facture;
+   
  
-    $sum=Product::where('facture_id',$product[0]->facture_id)->sum('unit_price');
+    $sum=Product::where('facture_id',$product->facture_id)->sum('unit_price');
 
-    return response()->json(['product'=>$product,'montant_facture'=>$sum]);
+    return response()->json(['product'=>$product,'montant_facture'=>$sum,'fournisseur'=>$fournisseur,'facture'=>$facture]);
 
 
         
@@ -176,13 +230,61 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id)
+    public function destroy( Product $product)
     {   
 
-      
-        $produit = Product::find($id);
-        $produit->delete();
+      $message=true;
+      //  $produit = Product::find($id);
+      // dd($product->structure);
+
+       if($product->structure>0)
+
+       {
+     $message=false;
+
+
+       }
+       else
+
+       {
+        $product->delete();
+
+
+
+       }
+      return response()->json(['message'=>$message]);
        
+    }
+
+
+    public function supp_produit_decharge(Product  $product)
+
+    {
+
+       
+//dd($product);
+        $product->update([
+     'commande_id'=> null
+
+        ]);
+    }
+
+
+    public function addbon()
+
+    {
+    if(request('tab') and request('id'))
+    {
+
+      $tab=request('tab');
+      $id=request('id');
+      
+
+      foreach(  $tab as $element )
+      {
+         Product::where('id','like',$element)->update(['commande_id'=>$id]);
+      }
+    }
     }
 
 }

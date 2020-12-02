@@ -16,6 +16,7 @@ class CreateFacturesTable extends Migration
         Schema::create('factures', function (Blueprint $table) {
             $table->id();
             $table->string('facture_code')->unique();
+            $table->string('paye');
             $table->integer('user_id')->unsigned()->index();
             $table->integer('fournisseur_id')->unsigned()->index();
 

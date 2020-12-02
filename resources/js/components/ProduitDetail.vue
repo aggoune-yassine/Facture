@@ -146,19 +146,22 @@ export default {
     methods: {
         getProduit() {
             axios
-                .get(`/api/produit/${this.$route.params.id}`)
+                .get(`/api/produit/show/${this.$route.params.id}`)
                 .then(response => {
-                    console.log(response.data);
-                    this.detail = response.data;
-                    this.code_produit = this.detail.product["0"].code;
-                    this.description = this.detail.product["0"].description;
-                    this.date = this.detail.product["0"].date_achat;
-                    this.prix = this.detail.product["0"].unit_price;
-                    this.montant_global = this.detail.montant_facture;
-                    this.facture = this.detail.product["0"].facture;
-                    this.fournisseur = this.detail.product["0"].fournisseur;
-                    this.structure = this.detail.product["0"].structure;
-                    this.File = this.detail.product["0"].file;
+                    console.log(response);
+                  //  this.detail = response.data;
+                    this.code_produit = response.data.product.code;
+                       this.facture = response.data.facture;
+                  this.fournisseur = response.data.fournisseur;
+                    this.description = response.data.product.description;
+                    this.date = response.data.product.date_achat;
+                   this.prix = response.data.product.unit_price;
+                   this.montant_global = response.data.product.montant_facture;
+                    this.montant_global = response.data.montant_facture;
+              
+                   
+                    this.structure = response.data.product.structure;
+                   this.File = response.data.product.file;
 
                     //   this.title = this.facture.fournisseur.title;
 

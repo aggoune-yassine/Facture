@@ -18,19 +18,24 @@
                    <li class="nav-item">
                     
                    <router-link class="nav-link" :to="ad" v-if="logged && admin" >Gestion de stock</router-link>
-                </li>
-
-                      <li class="nav-item">
-                    
-                   <router-link class="nav-link" :to="Produit" v-if="logged && admin" >List des produits </router-link>
-                </li>
+            
                 
                 
     
 
 
 
-  
+  <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Produit
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <router-link class="nav-link" :to="Produit" v-if="logged && admin" >List des produits </router-link>
+                                 <div class="dropdown-divider"></div>  
+                         <router-link class="nav-link" :to="commande" v-if="logged && admin" >Bon de commande </router-link>
+       
+        </div>
+      </li>
                 
                 
                  <li class="nav-item">
@@ -65,6 +70,7 @@ export default {
             logout : '/logout',
             budget : '/budget',
             ad : '/admin',
+            commande:'/commande',
             Produit:'/Produit',
             logged : User.isLogged().logged,
             name : User.isLogged().name,

@@ -49,7 +49,26 @@
                                             >{{ code_facture }}</span
                                         >
                                     </div>
+
+
+
                                 </div>
+
+                                              <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span
+                                        class="input-group-text"
+                                        id="basic-addon1"
+                                        > Facture payée</span
+                                    >
+                                </div>
+                            <select v-model='paye' class="form-control" id="exampleFormControlSelect1">
+                           
+      <option value="1">Oui</option>
+      <option value="0">Non</option>
+    
+    </select>
+                                              </div>
 
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
@@ -240,25 +259,19 @@ export default {
             code_facture: "",
             title: "",
             date: "",
+             paye:'',
             fournisseur_id: "",
             description: "",
             Fournisseur: "",
             piece_d: "",
             show: true,
-            pdfList: [
-                "",
-                "/fiche_mouvement/3.pdf",
-                "storage/Bon_de_commande/23.pdf",
-                "https://cdn.rawgit.com/mozilla/pdf.js/c6e8ca86/test/pdfs/annotation-link-text-popup.pdf",
-                "https://cdn.rawgit.com/mozilla/pdf.js/c6e8ca86/test/pdfs/calrgb.pdf",
-                "https://cdn.rawgit.com/sayanee/angularjs-pdf/68066e85/example/pdf/relativity.protected.pdf",
-                "data:application/pdf;base64,JVBERi0xLjUKJbXtrvsKMyAwIG9iago8PCAvTGVuZ3RoIDQgMCBSCiAgIC9GaWx0ZXIgL0ZsYXRlRGVjb2RlCj4+CnN0cmVhbQp4nE2NuwoCQQxF+/mK+wMbk5lkHl+wIFislmIhPhYEi10Lf9/MVgZCAufmZAkMppJ6+ZLUuFWsM3ZXxvzpFNaMYjEriqpCtbZSBOsDzw0zjqPHZYtTrEmz4eto7/0K54t7GfegOGCBbBdDH3+y2zsMsVERc9SoRkXORqKGJupS6/9OmMIUfgypJL4KZW5kc3RyZWFtCmVuZG9iago0IDAgb2JqCiAgIDEzOAplbmRvYmoKMiAwIG9iago8PAogICAvRXh0R1N0YXRlIDw8CiAgICAgIC9hMCA8PCAvQ0EgMC42MTE5ODcgL2NhIDAuNjExOTg3ID4+CiAgICAgIC9hMSA8PCAvQ0EgMSAvY2EgMSA+PgogICA+Pgo+PgplbmRvYmoKNSAwIG9iago8PCAvVHlwZSAvUGFnZQogICAvUGFyZW50IDEgMCBSCiAgIC9NZWRpYUJveCBbIDAgMCA1OTUuMjc1NTc0IDg0MS44ODk3NzEgXQogICAvQ29udGVudHMgMyAwIFIKICAgL0dyb3VwIDw8CiAgICAgIC9UeXBlIC9Hcm91cAogICAgICAvUyAvVHJhbnNwYXJlbmN5CiAgICAgIC9DUyAvRGV2aWNlUkdCCiAgID4+CiAgIC9SZXNvdXJjZXMgMiAwIFIKPj4KZW5kb2JqCjEgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzCiAgIC9LaWRzIFsgNSAwIFIgXQogICAvQ291bnQgMQo+PgplbmRvYmoKNiAwIG9iago8PCAvQ3JlYXRvciAoY2Fpcm8gMS4xMS4yIChodHRwOi8vY2Fpcm9ncmFwaGljcy5vcmcpKQogICAvUHJvZHVjZXIgKGNhaXJvIDEuMTEuMiAoaHR0cDovL2NhaXJvZ3JhcGhpY3Mub3JnKSkKPj4KZW5kb2JqCjcgMCBvYmoKPDwgL1R5cGUgL0NhdGFsb2cKICAgL1BhZ2VzIDEgMCBSCj4+CmVuZG9iagp4cmVmCjAgOAowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDA1ODAgMDAwMDAgbiAKMDAwMDAwMDI1MiAwMDAwMCBuIAowMDAwMDAwMDE1IDAwMDAwIG4gCjAwMDAwMDAyMzAgMDAwMDAgbiAKMDAwMDAwMDM2NiAwMDAwMCBuIAowMDAwMDAwNjQ1IDAwMDAwIG4gCjAwMDAwMDA3NzIgMDAwMDAgbiAKdHJhaWxlcgo8PCAvU2l6ZSA4CiAgIC9Sb290IDcgMCBSCiAgIC9JbmZvIDYgMCBSCj4+CnN0YXJ0eHJlZgo4MjQKJSVFT0YK"
-            ],
+         
             src: "",
             loadedRatio: 0,
             page: 1,
             numPages: 0,
             rotate: 0
+           
         };
     },
 
@@ -275,6 +288,7 @@ export default {
             formData.append("date", this.date);
             formData.append("fournisseur_id", this.fournisseur_id);
             formData.append("description", this.description);
+            formData.append("paye", this.paye);
             formData.append("_method", "put");
 
             axios
@@ -332,9 +346,17 @@ export default {
      }
  })
   .then(response=> {
+
+        this.refresh();
+        
+        this.src="";
   })
   .catch(error=> {
   })
+
+ 
+   
+
         },
 
         refresh() {
@@ -354,6 +376,7 @@ export default {
                     this.description = this.facture.description;
                     this.fournisseur_id = this.facture.fournisseur.id;
                     this.piece = "/" + this.facture.piece_depence;
+                    this.paye =  this.facture.paye;
                 })
                 .catch(error => {
                     console.log(error);
