@@ -146,8 +146,8 @@
                 <input type="checkbox" v-model="show" />
                 <select v-model="src" class="browser-default custom-select">
                     <option
-                        v-if="facture.Piece_depense"
-                        :value="facture.Piece_depense"
+                        v-if="facture.piece_depense"
+                        :value="facture.piece_depense"
                         >Piece depense</option
                     >
                     <option v-if="facture.facture" :value="facture.facture"
@@ -254,6 +254,7 @@ import pdf from "vue-pdf";
 export default {
     data() {
         return {
+           
             facture: {},
             piece: "",
             code_facture: "",

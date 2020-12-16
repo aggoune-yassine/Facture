@@ -24,7 +24,7 @@ class CommandeController extends Controller
    
    
         Carbon::setLocale('fr');
-        $Commandes = Commande::latest()->paginate('1');
+        $Commandes = Commande::latest()->paginate('4');
 
       
 

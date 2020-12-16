@@ -194,26 +194,20 @@ class FactureController extends Controller
      * @param  \App\Facture  $facture
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Facture $facture)
-    {
-  
-
-        $facture->update([
-         'paye'=>$request->paye,
-         'fournisseur_id'=>$request->fournisseur_id,
-         'date'=>$request->date
 
 
-        ]);
-  
-       
+     public function updatefile(Request $request, Facture $facture)
+
+
+     {
+
         if ($request->hasFile('Piece_depense'))
         {  
            
   
         $facture->update([
 
-            'Piece_depense' => '/storage/Piece_depense/' . $facture->facture_code.'.pdf' ]);
+            'Piece_depense' => '/storage/piece_depense/' . $facture->facture_code.'.pdf' ]);
         
         
             $this->Ajouter_fichier($request->Piece_depense,'piece_depense',$facture->facture_code);
@@ -320,7 +314,29 @@ class FactureController extends Controller
             $this->Ajouter_fichier($request->Contrat,'Pv_de_reception',$facture->facture_code);
         }
   
+
+        $facture = Facture::orderBy('id', 'desc')->get();
+
+
+        return response()->json($facture);
   
+
+
+     }
+    public function update(Request $request, Facture $facture)
+    {
+  
+
+        $facture->update([
+         'paye'=>$request->paye,
+         'fournisseur_id'=>$request->fournisseur_id,
+         'date'=>$request->date
+
+
+        ]);
+  
+       
+       
   
         $facture = Facture::orderBy('id', 'desc')->get();
 
@@ -400,7 +416,7 @@ return response()->json(['message'=>$message]);
     public function deletefile( Facture $facture,Request $request){
      
 
-      //  dd($this->getStringBetween(substr($request->src,8),'/','/'));
+       // dd($this->getStringBetween(substr($request->src,8),'/','/'));
          
           $facture->update([$this->getStringBetween(substr($request->src,8),'/','/') => null]);
   

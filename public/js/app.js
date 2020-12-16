@@ -2870,6 +2870,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['idbon', 'str'],
   data: function data() {
     return {
       produits: {},
@@ -2880,8 +2881,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     searchProduit: function searchProduit() {
-      var _this = this;
-
       //   if (this.q.length > 3) {
       axios.get("api/produit", {
         params: {
@@ -2889,32 +2888,26 @@ __webpack_require__.r(__webpack_exports__);
           status: this.status
         }
       }).then(function (response) {
-        console.log(response);
-        _this.produits = response.data;
+        console.log(response); //  this.produits = response.data;
       })["catch"](function (error) {
         console.log(error);
       }); //  }
     },
     bonadd: function bonadd() {
-      var _this2 = this;
-
       axios.get("/api/produit/addbon", {
         params: {
           tab: this.tab,
-          id: this.$route.params.structure
+          idbon: this.idbon
         }
       }).then(function (response) {
-        console.log(response);
-        _this2.produits = response.data;
+        console.log(response); // this.produits = response.data;
       })["catch"](function (error) {
         console.log(error);
       });
     },
-    onchange: function onchange() {
-      alert('sddscsc');
-    },
+    onchange: function onchange() {},
     getproduit: function getproduit(page) {
-      var _this3 = this;
+      var _this = this;
 
       if (typeof page === "undefined") {
         page = 1;
@@ -2923,18 +2916,18 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/produit", {
         params: {
           page: page,
-          idstructure: this.$route.params.structure
+          idstructure: this.str
         }
       }).then(function (response) {
         console.log(response);
-        _this3.produits = response.data;
+        _this.produits = response.data;
       })["catch"](function (error) {
         console.log(error);
       });
     }
   },
-  created: function created() {
-    this.getproduit();
+  mounted: function mounted() {
+    this.getproduit(); // alert(this.str);
   }
 });
 
@@ -3336,6 +3329,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3345,12 +3339,9 @@ __webpack_require__.r(__webpack_exports__);
       produits: [],
       commandes: '',
       bondecharge: '',
-      structure: ''
+      str: '',
+      idbon: this.$route.params.id
     };
-  },
-  created: function created() {
-    //  this.getfacture();
-    this.getcommande();
   },
   methods: {
     getcommande: function getcommande() {
@@ -3360,9 +3351,7 @@ __webpack_require__.r(__webpack_exports__);
         //     console.log(response);
         _this.commandes = response.data.produits;
         _this.bondecharge = response.data.commande;
-        _this.structure = _this.bondecharge.structure_id;
-
-        _this.$emit('structure', _this.structure);
+        _this.str = _this.bondecharge.structure_id;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3423,6 +3412,10 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     }
+  },
+  mounted: function mounted() {
+    //  this.getfacture();
+    this.getcommande();
   },
   components: {
     addproduit: _Add_Produit_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -4890,7 +4883,7 @@ __webpack_require__.r(__webpack_exports__);
       formData.append("proforma", this.proforma1);
       formData.append("code_facture", this.code_facture);
       formData.append("user_id", User.isLogged().id);
-      axios.post("/api/facture/".concat(this.$route.params.id), formData, config).then(function (response) {
+      axios.post("/api/facture/file/".concat(this.$route.params.id), formData, config).then(function (response) {
         //console.log(response);
         Swal.fire({
           position: "center ",
@@ -5002,13 +4995,66 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      structure: '',
-      filename: '',
-      file: '',
-      success: ''
+      codestructure: "",
+      structure: "",
+      filename: "",
+      file: "",
+      success: ""
     };
   },
   methods: {
@@ -5016,8 +5062,15 @@ __webpack_require__.r(__webpack_exports__);
       this.filename = "Selected File: " + e.target.files[0].name;
       this.file = e.target.files[0];
     },
-    submitForm: function submitForm(e) {
+    getstructure: function getstructure() {
       var _this = this;
+
+      axios.get("/api/structure").then(function (response) {
+        _this.codestructure = response.data;
+      })["catch"](function (error) {});
+    },
+    submitForm: function submitForm(e) {
+      var _this2 = this;
 
       // console.log(e);
       e.preventDefault(); //et currentObj = this;
@@ -5029,17 +5082,20 @@ __webpack_require__.r(__webpack_exports__);
       }; // form data
 
       var formData = new FormData();
-      formData.append('file', this.file);
-      formData.append('structure', this.structure);
+      formData.append("file", this.file);
+      formData.append("structure", this.structure);
       formData.append("_method", "put"); // send upload request
 
       axios.post("/api/produit/".concat(this.$route.params.id), formData, config).then(function (response) {
         // currentObj.success = response.data.success;
-        _this.filename = "";
-        _this.file = "";
+        _this2.filename = "";
+        _this2.file = "";
       })["catch"](function (error) {// this.output = error;
       });
     }
+  },
+  created: function created() {
+    this.getstructure();
   }
 });
 
@@ -79956,9 +80012,13 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("addproduittodecharge"),
+      _c("addproduit", { on: { "add-prod": _vm.refresh } }),
       _vm._v(" "),
-      _c("addproduit", { on: { "add-prod": _vm.refresh } })
+      _vm.str
+        ? _c("addproduittodecharge", {
+            attrs: { idbon: _vm.idbon, str: _vm.str }
+          })
+        : _vm._e()
     ],
     1
   )
@@ -80273,10 +80333,10 @@ var render = function() {
             }
           },
           [
-            _vm.facture.Piece_depense
+            _vm.facture.piece_depense
               ? _c(
                   "option",
-                  { domProps: { value: _vm.facture.Piece_depense } },
+                  { domProps: { value: _vm.facture.piece_depense } },
                   [_vm._v("Piece depense")]
                 )
               : _vm._e(),
@@ -82084,13 +82144,20 @@ var render = function() {
                         }
                       }
                     },
-                    [
-                      _c("option", [_vm._v("109")]),
-                      _vm._v(" "),
-                      _c("option", [_vm._v("108")]),
-                      _vm._v(" "),
-                      _c("option", [_vm._v("107")])
-                    ]
+                    _vm._l(_vm.codestructure, function(F, index) {
+                      return _c(
+                        "option",
+                        { key: index, domProps: { value: F.id } },
+                        [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(F.structure) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    }),
+                    0
                   )
                 ]),
                 _vm._v(" "),
@@ -82112,7 +82179,7 @@ var render = function() {
                         staticClass: "custom-file-label",
                         attrs: { for: "inputFileUpload" }
                       },
-                      [_vm._v("Choisir fichier ")]
+                      [_vm._v("Choisir fichier\n                            ")]
                     )
                   ])
                 ]),
@@ -82120,7 +82187,11 @@ var render = function() {
                 _c("br"),
                 _vm._v(" "),
                 _c("p", { staticClass: "text-danger font-weight-bold" }, [
-                  _vm._v(_vm._s(_vm.filename))
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(_vm.filename) +
+                      "\n                    "
+                  )
                 ]),
                 _vm._v(" "),
                 _vm._m(1)
@@ -82141,7 +82212,7 @@ var staticRenderFns = [
       _c(
         "h5",
         { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Affecter produit")]
+        [_vm._v("\n                    Affecter produit\n                ")]
       ),
       _vm._v(" "),
       _c(
@@ -82169,13 +82240,21 @@ var staticRenderFns = [
           staticClass: "btn btn-secondary",
           attrs: { type: "button", "data-dismiss": "modal" }
         },
-        [_vm._v("Close")]
+        [
+          _vm._v(
+            "\n                            Close\n                        "
+          )
+        ]
       ),
       _vm._v(" "),
       _c(
         "button",
         { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [_vm._v("Save changes")]
+        [
+          _vm._v(
+            "\n                            Save changes\n                        "
+          )
+        ]
       )
     ])
   }

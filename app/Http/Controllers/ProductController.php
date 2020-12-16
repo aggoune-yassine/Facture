@@ -273,11 +273,11 @@ $facture=$product->facture;
     public function addbon()
 
     {
-    if(request('tab') and request('id'))
+    if(request('tab')  and ('idbon'))
     {
 
       $tab=request('tab');
-      $id=request('id');
+      $id=request('idbon');
       
 
       foreach(  $tab as $element )

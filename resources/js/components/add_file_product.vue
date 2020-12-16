@@ -350,7 +350,7 @@ export default {
             formData.append("user_id", User.isLogged().id);
 
             axios
-                .post(`/api/facture/${this.$route.params.id}`,formData, config)
+                .post(`/api/facture/file/${this.$route.params.id}`,formData, config)
                 .then(response => {
                     //console.log(response);
 

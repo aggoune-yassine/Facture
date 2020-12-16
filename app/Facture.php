@@ -23,7 +23,7 @@ class Facture extends Model
 
 
 
-    'Piece_depense',
+    'piece_depense',
    'facture',
  
    'Bon_de_livraison',

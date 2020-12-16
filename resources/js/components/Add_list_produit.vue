@@ -112,12 +112,21 @@
 
 <script>
 export default {
+
+     props:[
+                'idbon',
+               'str'
+            ],
     data() {
+
+        
         return {
             produits: {},
             q: "",
             status:'',
             tab:[],
+
+           
         };
     },
 
@@ -135,7 +144,7 @@ export default {
                 })
                 .then(response=> {
                       console.log(response);
-                    this.produits = response.data;
+                  //  this.produits = response.data;
                 })
                 .catch(error=> {
                      console.log(error);
@@ -150,7 +159,9 @@ export default {
                   axios.get("/api/produit/addbon", {
                     params: {
                         tab:this.tab,
-                        id:this.$route.params.structure
+                       
+                        idbon:this.idbon,
+
                       
                     
 
@@ -158,7 +169,7 @@ export default {
                 })
                 .then(response=> {
                       console.log(response);
-                    this.produits = response.data;
+                   // this.produits = response.data;
                 })
                 .catch(error=> {
                      console.log(error);
@@ -170,7 +181,7 @@ export default {
 
  onchange()
  {
-alert('sddscsc');
+
 
  },
         getproduit(page) {
@@ -182,13 +193,14 @@ alert('sddscsc');
                 {
                     params :{
                            page:page,
-                          idstructure:this.$route.params.structure,
+                           idstructure:this.str,
+
                     }
 
                 })
                 .then(response => {
                     console.log(response);
-                    this.produits = response.data;
+                   this.produits = response.data;
                 })
                 .catch(error => {
                     console.log(error);
@@ -196,10 +208,11 @@ alert('sddscsc');
         }
     },
 
-    created() {
+    mounted() {
 
       
         this.getproduit();
+       // alert(this.str);
     }
 };
 </script>

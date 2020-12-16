@@ -20,7 +20,7 @@ class CreateFacturesTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->integer('fournisseur_id')->unsigned()->index();
 
-            $table->string('Piece_depense')->unique()->nullable();
+            $table->string('piece_depense')->unique()->nullable();
             $table->string('facture')->unique()->nullable();
          
             $table->string('Bon_de_livraison')->unique()->nullable();

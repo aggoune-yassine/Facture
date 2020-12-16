@@ -19,8 +19,11 @@ use Illuminate\Support\Facades\Route;
 
 //Route::apiResource('facture','FactureController');
 Route::get('facture/{q?}','FactureController@index' );
+
+
 Route::POST('facture','FactureController@store' );
 Route::PUT('facture/{facture}','FactureController@update' );
+Route::PUT('facture/file/{facture}','FactureController@updatefile' );
 Route::get('facture/show/{facture}','FactureController@show' );
 Route::delete('facture/deletefile/{facture}','FactureController@deletefile');
 Route::delete('facture/{facture}','FactureController@destroy');
@@ -45,6 +48,9 @@ Route::delete('produit/{product}','ProductController@destroy');
 Route::get('commande/commande_produit/{commande}','CommandeController@Produit_commande' );
 Route::delete('produit/supproduit/{product}','ProductController@supp_produit_decharge');
 Route::get('produit/addbon','ProductController@addbon');
+
+
+Route::get('structure','StructureController@index' );
 
 
 

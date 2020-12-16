@@ -94,8 +94,9 @@
                 </div>
             </div>
         </div>
-        <addproduittodecharge  />
-        <addproduit @add-prod="refresh" />
+         <addproduit @add-prod="refresh" />
+        <addproduittodecharge v-if="str" v-bind:idbon="idbon" v-bind:str="str"  />
+       
     </div>
 </template>
 
@@ -113,16 +114,14 @@ export default {
             commandes:'',
             bondecharge:'',
             
-            structure:'',
+            str:'',
+            idbon:this.$route.params.id
 
 
         };
     },
 
-    created() {
-      //  this.getfacture();
-        this.getcommande();
-    },
+ 
 
     methods: {
 
@@ -135,8 +134,9 @@ export default {
                   //     console.log(response);
                     this.commandes = response.data.produits;
                     this.bondecharge=response.data.commande;
-                    this.structure=this.bondecharge.structure_id;
-                    this.$emit('structure',this.structure);
+                    this.str=this.bondecharge.structure_id;
+               
+                   
 
              })
              .catch(error=> {
@@ -211,6 +211,11 @@ export default {
                 }
             });
         }
+    },
+
+       mounted() {
+      //  this.getfacture();
+        this.getcommande();
     },
 
     components: { addproduit,addproduittodecharge }
