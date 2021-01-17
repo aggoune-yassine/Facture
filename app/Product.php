@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Budget;
 use App\facture;
+use App\Structure;
 use Illuminate\Console\Command;
 
 class Product extends Model
@@ -15,16 +16,18 @@ class Product extends Model
         'code',
         'facture_id',
         'description',
-        'date_achat',
+        'date',
         'unit_price',
         'commande_id',
         'structure_id',
+      
 
        // 'qty',
         'file',
         'structure',
         'budget_id',
-        'status'
+        'status',
+        'materiel_id',
     ];
     public function facture()
     {
@@ -43,7 +46,11 @@ class Product extends Model
 
        public function structure(){
 
-        return  $this->belongsTo(structure::class);
+        return  $this->belongsTo(Structure::class);
+       }
+       public function materiel(){
+
+        return  $this->belongsTo(Materiel::class);
        }
     
 

@@ -68,7 +68,7 @@
                                         :to="{
                                             path:
                                                 'facture/edit/' +
-                                                facture.facture_code
+                                               facture.id
                                         }"
                                         class="btn mr-1 btn-sm btn-primary"
                                     >
@@ -77,7 +77,7 @@
 
                                     <router-link
                                         :to="{
-                                            path: 'facture/edit/' + facture.id
+                                            path: 'facture/Mod/' + facture.id
                                         }"
                                         class="btn mr-1 btn-sm btn-warning"
                                     >

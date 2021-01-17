@@ -16,6 +16,8 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
+            $table->integer('materiel_id')->nullable();
+
             $table->integer('structure_id')->nullable();
 
            
@@ -23,10 +25,10 @@ class CreateProductsTable extends Migration
             $table->integer('commande_id')->nullable();
             $table->integer('budget_id')->unsigned();
             $table->text('description');
-            $table->unsignedInteger('date_achat');
+            $table->unsignedInteger('date');
             $table->double('unit_price',14,2)->unsigned();
             $table->string('file',100)->nullable();
-            $table->string('structure',10)->nullable();
+        
 
           //  $table->integer('qty')->unsigned();
            

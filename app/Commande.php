@@ -10,12 +10,14 @@ class Commande extends Model
 
     protected $fillable = [
 
-
+      'code_decharge',
         'structure_id',
+        'file',
         'user_id',
        
       ];
 
+ 
 
     public function products()
 

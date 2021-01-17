@@ -38,7 +38,7 @@
                                         :value="F.id"
                                         v-bind:key="index"
                                     >
-                                        {{ F.structure }}
+                                        {{ F.designation }}
                                     </option>
                             </select>
                         </div>
@@ -121,6 +121,8 @@ export default {
                 .get("/api/structure")
                 .then(response => {
                     this.codestructure = response.data;
+
+
                 })
                 .catch(error => {});
         },
@@ -144,6 +146,16 @@ export default {
             axios
                 .post(`/api/produit/${this.$route.params.id}`, formData, config)
                 .then(response => {
+
+                    Swal.fire({
+                        position: "center ",
+                        icon: "success",
+                        title: "Affectation avec succes ",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    this.$emit("affecter-file");
+                    $("#aff_produit").modal("hide");
                     // currentObj.success = response.data.success;
                     this.filename = "";
                     this.file = "";

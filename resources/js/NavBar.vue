@@ -1,7 +1,7 @@
 <template>
     <div>
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
-            <router-link class="navbar-brand" :to="home">Facturation</router-link>
+            <router-link class="navbar-brand" :to="home">Facturation & stock</router-link>
             <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
                 aria-expanded="false" aria-label="Toggle navigation">
             </button>
@@ -12,13 +12,10 @@
                 </li>
                   <li class="nav-item">
                 
-                   <router-link class="nav-link" :to="ad" v-if="logged && admin" >Administration</router-link>
+                   <router-link class="nav-link" :to="ad" v-if="logged && admin" >facturation</router-link>
                 </li>
 
-                   <li class="nav-item">
-                    
-                   <router-link class="nav-link" :to="ad" v-if="logged && admin" >Gestion de stock</router-link>
-            
+                
                 
                 
     
@@ -27,12 +24,12 @@
 
   <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Produit
+          Stock
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <router-link class="nav-link" :to="Produit" v-if="logged && admin" >List des produits </router-link>
                                  <div class="dropdown-divider"></div>  
-                         <router-link class="nav-link" :to="commande" v-if="logged && admin" >Bon de commande </router-link>
+                         <router-link class="nav-link" :to="commande" v-if="logged && admin" >List des décharges </router-link>
        
         </div>
       </li>

@@ -207,7 +207,7 @@ class FactureController extends Controller
   
         $facture->update([
 
-            'Piece_depense' => '/storage/piece_depense/' . $facture->facture_code.'.pdf' ]);
+            'piece_depense' => '/storage/piece_depense/' . $facture->facture_code.'.pdf' ]);
         
         
             $this->Ajouter_fichier($request->Piece_depense,'piece_depense',$facture->facture_code);

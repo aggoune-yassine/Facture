@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Budget;
 use App\Facture;
 
 use App\Product;
 use Carbon\Carbon;
+use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,62 +28,101 @@ class ProductController extends Controller
         if(request('idstructure'))  {
 
          
-
-          $produits=Product::where('structure_id','like',request('idstructure'))->whereNull('commande_id')->get();
-       //   return response()->json(['data'=>$produits]);
-
+        $produits=Product::where('structure_id','like',request('idstructure'))->whereNull('commande_id')->get();
+     
        foreach( $produits as $produit){
         $produit->setattribute('created',$produit->created_at->diffForHumans());
       
         $produit->setattribute('facture',$produit->facture);
         $produit->setattribute('user',$produit->facture->user);
    
-    }
+                           }
 
       return response()->json(['data'=>$produits]);
 
 
         }
 
-       
-        if(request('q') OR request('status') ) 
+
+        if((request('q') ))
 
         {
-          if(empty(request('status')))
-
-          {
-            
-            $produits =Product::where('code','like', '%'.request('q').'%')->
-           
-            
-            get();
-
-          }
-          else 
-          {
-
-         
-
+          
           $produits =Product::where('code','like', '%'.request('q').'%')->
-          where('status','like',request('status'))
-          ->
+         
+          
           get();
-        }
-
           foreach( $produits as $produit){
             $produit->setattribute('created',$produit->created_at->diffForHumans());
-          
             $produit->setattribute('facture',$produit->facture);
             $produit->setattribute('user',$produit->facture->user);
-       
+
+        }
+        return response()->json(['data'=>$produits]);
+      
         }
 
+           if((request('type_id')))
+
+          {
+           
+          
+            $produits =Product::where('materiel_id','like', request('type_id'))-> get();
+            foreach( $produits as $produit){
+              $produit->setattribute('created',$produit->created_at->diffForHumans());
+              $produit->setattribute('facture',$produit->facture);
+              $produit->setattribute('user',$produit->facture->user);
+
+          }
           return response()->json(['data'=>$produits]);
+        
+
+   
         }
+
+        if((request('status') ))
+
+        {
+
+        
+
+          if(request('status')=='2')
+          {
+            
+            $produits =Product::whereNull('structure_id')->whereNull('commande_id')->whereNull('file')->
+         
+          
+            get();
+          }
+
+          if(request('status')=='3')
+          {
+            
+            $produits =Product::whereNotNull('structure_id')->whereNotNull('commande_id')->whereNotNull('file')->
+         
+          
+            get();
+          }
+          
+         
+          foreach( $produits as $produit){
+            $produit->setattribute('created',$produit->created_at->diffForHumans());
+            $produit->setattribute('facture',$produit->facture);
+            $produit->setattribute('user',$produit->facture->user);
+
+        }
+        return response()->json(['data'=>$produits]);
+      
+        }
+
+
+      
+
+         
+        
         
         $produits = Product::latest()->paginate('4');
-        //$produits = Product::all();
-
+   
         foreach( $produits as $produit){
             $produit->setattribute('created',$produit->created_at->diffForHumans());
           
@@ -90,7 +132,7 @@ class ProductController extends Controller
        
         }
 
-      //dd($produits);
+     
    
         return response()->json($produits);
     }
@@ -114,17 +156,37 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+
+      
         $total=0;
+        $this->validate($request,[
+          'code'=>'required|unique:products|max:255',
+          'description'=>'required|max:255',
+          
+          'unit_price'=>'required',
+          
+          'date'=>'required',
+          
+          'budget_id'=>'required',
+          'materiel_id'=>'required'
+
+
+        ]);
+     
+       
+
+
 
         Product::create([
             'code'=>$request->code,
+            'materiel_id'=>$request->materiel_id,
           
             'facture_id' => $request->id_facture,
 
-            'budget_id' => $request->code_budget,
+            'budget_id' => $request->budget_id,
             'description' => $request->description,
 
-            'date_achat' => $request->date,
+            'date' => $request->date,
 
             'unit_price' => $request->unit_price,
          //   'qty' => $request->qty,
@@ -167,15 +229,16 @@ class ProductController extends Controller
       
 
   
-    
+   
     
        $fournisseur= $product->facture->fournisseur;
-$facture=$product->facture;
+       $facture=$product->facture;
+       $structure=$product->structure;
    
- 
+   
     $sum=Product::where('facture_id',$product->facture_id)->sum('unit_price');
 
-    return response()->json(['product'=>$product,'montant_facture'=>$sum,'fournisseur'=>$fournisseur,'facture'=>$facture]);
+    return response()->json(['product'=>$product,'montant_facture'=>$sum,'fournisseur'=>$fournisseur,'facture'=>$facture,'structure'=>$structure]);
 
 
         
@@ -217,12 +280,13 @@ $facture=$product->facture;
 
 
    $name=$product->id.'.pdf';
-      $request->file->move(public_path('fiche_mouvement'),$name);
-      $product->update(['file'=>'/fiche_mouvement/'.$name,'structure'=>$request->structure]);
+      $request->file->move(public_path('/storage/fiche_mouvement'),$name);
+      $product->update(['file'=>'/storage/fiche_mouvement/'.$name,'structure_id'=>$request->structure]);
     //Storage::put('/fiche_mouvement/file.pdf', $request->file);
      
  //  Product::where('id',$product->id)->update(['file'=>$request->file],['structure'=>$request->structure]);
 } }
+
 
     /**
      * Remove the specified resource from storage.
@@ -285,6 +349,17 @@ $facture=$product->facture;
          Product::where('id','like',$element)->update(['commande_id'=>$id]);
       }
     }
+    }
+
+
+    public function suppfile(Product $product) {
+
+    
+      File::delete(public_path($product->file));
+
+      $product->update(['file' => null]);
+  
+   
     }
 
 }

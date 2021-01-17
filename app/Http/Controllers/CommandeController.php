@@ -23,10 +23,26 @@ class CommandeController extends Controller
         
    
    
-        Carbon::setLocale('fr');
-        $Commandes = Commande::latest()->paginate('4');
-
+       
       
+        if (request('q') != null) {
+
+
+            $Commandes['data'] = Commande::where('code_decharge', 'like', '%' . request('q') . '%')->get();
+
+            foreach ($Commandes['data'] as $commande) {
+
+                //  dd($commande->structure);
+                  $commande->setattribute('user', $commande->user);
+                  $commande->setattribute('structure', $commande->structure);
+                  $commande->setattribute('created', $commande->created_at->diffForHumans());
+              }
+
+
+              return response()->json($Commandes);
+        }
+        Carbon::setLocale('fr');
+      $Commandes = Commande::latest()->paginate('3');
 
         foreach ($Commandes as $commande) {
 
@@ -56,19 +72,22 @@ class CommandeController extends Controller
           
         
 
-      ]
-      
-      );
-        Commande::create([
+      ]);
 
+      
+        Commande::create([
+            'file'=>'/storage/decharge/' . $request->code_decharge.'.pdf' ,
             'user_id' => $request->user_id,
             'structure_id'=>$request->structure_id,
+            'code_decharge'=>$request->code_decharge,
 
            
 
 
 
         ]);
+
+        $request->decharge->move(public_path('storage/decharge'), $request->code_decharge.'.pdf');
         $commande = Commande::orderBy('id', 'desc')->get();
 
 
@@ -90,6 +109,36 @@ class CommandeController extends Controller
 
         return response()->json(['produits'=>$produits,'commande'=>$commande]);
 
+       
+    }
+
+    public function updatefile(commande $commande , Request $request){
+
+        if(($request->hasFile('decharge')))
+        {
+     
+     
+         
+     
+     
+        $name=$commande->commande.'.pdf';
+           $request->decharge->move(public_path('/storage/decharge'),$name);
+           $commande->update(['file'=>'/storage/decharge/'.$name]);
+         
+     } 
+
+    }
+
+    public function destroy( Commande $commande)
+    {   
+
+
+        $message=true;
+        $commande->delete();
+
+
+
+      return response()->json(['message'=>$message]);
        
     }
 

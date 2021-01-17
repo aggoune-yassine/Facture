@@ -27,6 +27,8 @@
                                     aria-describedby="basic-addon1"
                                 />
                             </div>
+
+                            
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span
@@ -43,12 +45,35 @@
                                     
                                 >
                                    
-                                    <option value="">tous les produits</option>
-                                   
-                                    <option value="1">dans le stock</option>
-                                    <option value="2">Fiche mouvement sans retour</option>
-                                    <option value="3">Fiche mouvement avec retour</option>
-                                    <option value="4">avec bon de commande</option>
+                                
+                                    <option value="2">les Produits dans le stock</option>
+                                    <option value="3">Les Produits hors stock </option>
+                                 
+                                </select>
+                            </div>
+
+                                <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span
+                                        class="input-group-text"
+                                        id="basic-addon1"
+                                        >Type</span
+                                    >
+                                </div>
+
+                                <select
+                                    class="custom-select"
+                                    id="inputGroupSelect01"
+                                    v-model="type_id"
+                                     @change="searchProduit"
+                                >
+                                    <option
+                                        v-for="(T, index) in type"
+                                        :value="T.id"
+                                        v-bind:key="index"
+                                    >
+                                        {{ T.designation }}
+                                    </option>
                                 </select>
                             </div>
                         </class>
@@ -108,7 +133,9 @@ export default {
         return {
             produits: {},
             q: "",
-            status:''
+            status:'',
+            type:'',
+            type_id:'',
         };
     },
 
@@ -119,7 +146,9 @@ export default {
                 axios.get("api/produit", {
                     params: {
                         q:this.q,
-                        status:this.status
+                        status:this.status,
+                        type_id:this.type_id,
+
 
                     }
                 })
@@ -153,11 +182,23 @@ alert('sddscsc');
                 .catch(error => {
                     console.log(error);
                 });
-        }
+        },
+             getTypemateriel() {
+            axios
+                .get("/api/materiel")
+                .then(response => {
+                    console.log(response.data);
+                    this.type = response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
     },
 
     created() {
         this.getproduit();
+        this.getTypemateriel();
     }
 };
 </script>

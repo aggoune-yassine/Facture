@@ -62,7 +62,7 @@
                         <div class="card-header">
                             FICHE DE SORTIE
                         </div>
-                        <div v-if="File">
+                        <div v-if="File || structure">
                          <div  class="card-body">
                            
 
@@ -83,6 +83,14 @@
                             >
                                 Modifier affectation produit
                             </button>
+
+                                       <button
+                    type="button"
+                    class="btn btn-primary"
+                    @click="supprime"
+                >
+                    supprimer fiche mouvement
+                </button>
                             </li>
 
                             
@@ -111,7 +119,7 @@
                 </div>
             </div>
         </div>
-        <aff_produit />
+        <aff_produit @affecter-file="refresh()"  />
     </div>
 </template>
 
@@ -144,6 +152,15 @@ export default {
     },
 
     methods: {
+
+
+        refresh(){
+             
+       
+        this.getProduit();
+    
+
+    },
         getProduit() {
             axios
                 .get(`/api/produit/show/${this.$route.params.id}`)
@@ -160,7 +177,7 @@ export default {
                     this.montant_global = response.data.montant_facture;
               
                    
-                    this.structure = response.data.product.structure;
+                    this.structure = response.data.product.structure.designation;
                    this.File = response.data.product.file;
 
                     //   this.title = this.facture.fournisseur.title;
@@ -173,6 +190,25 @@ export default {
                 });
         },
 
+         supprime(){
+
+
+
+  axios.delete('/api/produit/deletefile/'+this.$route.params.id)
+  .then(response=> {
+
+   
+        this.File="";
+  })
+  .catch(error=> {
+  })
+
+ 
+   
+
+        },
+
+
         onchangefichemouvement(event) {
             console.log(event.target.files[0]);
             this.Fiche_mouvement = event.target.files[0];
@@ -183,6 +219,8 @@ export default {
         // alert("qsdqsdqs");
 
         this.getProduit();
-    }
+    },
+
+    
 };
 </script>

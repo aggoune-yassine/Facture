@@ -4,27 +4,17 @@
             <div class="row my-5">
                 <div class="col-md-12">
                     <div class="card mt-4">
-                       
                         <div class="card-header">
-                            Ajouter Produit a la décharge
+                            Liste des Produits de la  décharge
 
-                            <router-link :to="chamin"
-                                            >
-                                            
-                                            <i class="fa fa-plus"></i>
-                                            
-                                            
-                                            </router-link>
-                           
+                            <router-link :to="chamin">
+                                <i class="fa fa-plus"></i>
+                            </router-link>
                         </div>
                         <div class="card-body">
-                            <div class="row mb-4">
-                              
-                            </div>
+                            <div class="row mb-4"></div>
 
                             <div class="table-responsive-sm">
-
-  
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
@@ -41,36 +31,36 @@
                                     </thead>
                                     <tbody>
                                         <tr
-                                            v-for="(commande, index) in commandes"
+                                            v-for="(commande,
+                                            index) in commandes"
                                             v-bind:key="index"
                                         >
-
-                                         
-                                          <td>
-                                            <router-link :to="'/Produit/'+commande.id"
-                                            >{{ commande.id}}</router-link>
-
-                                          </td>
+                                            <td>
+                                                <router-link
+                                                    :to="
+                                                        '/Produit/' +
+                                                            commande.id
+                                                    "
+                                                    >{{
+                                                        commande.id
+                                                    }}</router-link
+                                                >
+                                            </td>
                                             <td class="left strong">
                                                 {{ commande.code }}
                                             </td>
 
                                             <td class="left">
-                                                {{
-                                                   commande.description
-                                                }}
+                                                {{ commande.description }}
                                             </td>
 
-                                             <td class="left">
-                                                {{
-                                                   commande.date_achat
-                                                }}
+                                            <td class="left">
+                                                {{ commande.date_achat }}
                                             </td>
                                             <td class="left">
-                                                {{commande.unit_price }}
+                                                {{ commande.unit_price }}
                                             </td>
 
-                                            
                                             <td>
                                                 <a
                                                     @click="
@@ -87,71 +77,102 @@
                                     </tbody>
                                 </table>
                             </div>
-                           
-    
                         </div>
+             
+                        <div class="col-sm-12 ">
+                            <div class="card">
+                                <div class="card-header">
+                                    Bon de décharge
+                                </div>
+                                <div v-if="File">
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                          
+                                            <li class="list-group-item">
+                                           
+
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-primary"
+                                                    @click="supprime"
+                                                >
+                                                    supprimer bon de décharge 
+                                                </button>
+                                                   <button
+                                                    type="button"
+                                                    class="btn btn-primary"
+                                                    data-toggle="modal"
+                                                    data-target="#moddecharge"
+                                                    
+                                                >
+                                                    Modifier bon de décharge 
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <pdf :src="File"></pdf>
+                                </div>
+                          
+                            </div>
+                        </div>
+                         <mdfdecharge/>
                     </div>
                 </div>
             </div>
         </div>
-         <addproduit @add-prod="refresh" />
-        <addproduittodecharge v-if="str" v-bind:idbon="idbon" v-bind:str="str"  />
-       
+        <addproduit @add-prod="refresh" />
+        <addproduittodecharge
+            v-if="str"
+            v-bind:idbon="idbon"
+            v-bind:str="str"
+        />
     </div>
+   
 </template>
 
 <script>
 import addproduit from "./Add_Produit.vue";
 import addproduittodecharge from "./Add_list_produit.vue";
+import pdf from "vue-pdf";
+import mdfdecharge from "./modifier_file_decharge.vue";
 export default {
     data() {
         return {
-
-            
             facture: "",
+            File:'',
 
             produits: [],
-            commandes:'',
-            bondecharge:'',
-            
-            str:'',
-            idbon:this.$route.params.id
+            commandes: "",
+            bondecharge: "",
 
-
+            str: "",
+            idbon: this.$route.params.id
         };
     },
 
- 
-
     methods: {
-
-
-         getcommande() {
-
-
-             axios.get(`/api/commande/commande_produit/${this.$route.params.id}`)
-             .then(response=> {
-                  //     console.log(response);
+        getcommande() {
+            axios
+                .get(`/api/commande/commande_produit/${this.$route.params.id}`)
+                .then(response => {
+                    //     console.log(response);
                     this.commandes = response.data.produits;
-                    this.bondecharge=response.data.commande;
-                    this.str=this.bondecharge.structure_id;
-               
-                   
-
-             })
-             .catch(error=> {
-                     console.log(error);
-             })
-     
+                    this.bondecharge = response.data.commande;
+                    this.str = this.bondecharge.structure_id;
+                    this.File=response.data.commande.file;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         },
         getfacture() {
             axios
                 .get(`/api/facture/show/${this.$route.params.id}`)
                 .then(response => {
                     console.log(response);
-                   // this.facture = response.data;
+                    // this.facture = response.data;
 
-                 //   this.produits = response.data.produits;
+                    //   this.produits = response.data.produits;
                 })
                 .catch(error => {
                     console.log(error);
@@ -180,7 +201,6 @@ export default {
                 cancelButtonColor: "#d33"
             }).then(result => {
                 if (result.value) {
-      
                     axios
                         .delete(`/api/produit/supproduit/${produit}`)
 
@@ -213,11 +233,11 @@ export default {
         }
     },
 
-       mounted() {
-      //  this.getfacture();
+    mounted() {
+        //  this.getfacture();
         this.getcommande();
     },
 
-    components: { addproduit,addproduittodecharge }
+    components: { mdfdecharge:mdfdecharge,addproduit, addproduittodecharge, pdf: pdf }
 };
 </script>

@@ -15,7 +15,9 @@
                                         <th scope="col">code</th>
                                         <th scope="col">Ligne Budgetaire</th>
                                         <th scope="col">Date</th>
-                                        <th scope="col">Montant</th>
+                                        <th scope="col">Montant initial</th>
+
+                                        <th scope="col">Montant restant</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -26,6 +28,8 @@
                                         <th scope="row">{{budget.code}}</th>
                                         <th scope="row">{{budget.ligne_budgetaire}}</th>
                                         <th scope="row">{{budget.date}}</th>
+                                        <th scope="row">{{budget.montant_initial}}DA</th>
+
                                         <th scope="row">{{budget.montant}}DA</th>
                                         
                                        

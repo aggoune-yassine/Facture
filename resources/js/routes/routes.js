@@ -8,6 +8,7 @@ import logout from '../components/logout.vue'
 import inscription from '../components/inscription.vue'
 import adminPanel from '../components/AdminPanel.vue'
 import edit_facture from '../components/Edit_Facture.vue'
+import Mod_facture from '../components/Mod_Facture.vue'
 import budget from '../components/Budget.vue'
 import Produit from '../components/Produit.vue'
 import product from '../components/ProduitDetail.vue'
@@ -84,6 +85,12 @@ const routes = [{
         path: '/facture/edit/:id',
         component: edit_facture,
         name: 'edit_facture'
+    },
+    {
+
+        path: '/facture/Mod/:id',
+        component: Mod_facture,
+        name: 'Mod_facture'
     },
     {
 

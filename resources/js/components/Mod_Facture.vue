@@ -5,12 +5,30 @@
                 <div class="container mt-5 text-center">
                     <div class="card ">
                         <div class="card-header">
-                            Afficher le detail de la  facture
+                            Modifier Facture
                         </div>
 
                         <div class="card-body">
 
-                      
+                         <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span
+                                            class="input-group-text"
+                                            id="basic-addon1"
+                                            >Ajouter piece</span
+                                        >
+                                    </div>
+                                    <div class="input-group-append">
+                                         <button
+                                type="submit"
+                                class="btn btn-primary"
+                                data-toggle="modal"
+                                data-target="#addfile"
+                            >
+                                +
+                            </button>
+                                    </div>
+                                </div>
                          
                             <form
                                 @submit="updatefacture"
@@ -44,10 +62,10 @@
                                         > Facture payée</span
                                     >
                                 </div>
-                            <select  class="form-control" id="exampleFormControlSelect1">
+                            <select v-model='paye' class="form-control" id="exampleFormControlSelect1">
                            
-      <option v-if="paye=='1'" value="1">Oui</option>
-      <option v-else-if="paye=='0'"  value="0">Non</option>
+      <option value="1">Oui</option>
+      <option value="0">Non</option>
     
     </select>
                                               </div>
@@ -80,10 +98,14 @@
                                     <select
                                         class="custom-select"
                                         id="inputGroupSelect01"
-                                      
+                                        v-model="fournisseur_id"
                                     >
-                                        <option>
-                                            {{ facture.fournisseur.title}}
+                                        <option
+                                            v-for="(F, index) in Fournisseur"
+                                            :value="F.id"
+                                            v-bind:key="index"
+                                        >
+                                            {{ F.title }}
                                         </option>
                                     </select>
                                 </div>
@@ -105,7 +127,14 @@
                                     />
                                 </div>
 
-                             
+                                <div class="modal-footer">
+                                    <button
+                                        type="submit"
+                                        class="btn btn-primary"
+                                    >
+                                        Save changes
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -185,7 +214,13 @@
                 >
                     imprimer
                 </button>
-             
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    @click="supprime"
+                >
+                    supprimer
+                </button>
                 <div style="width: 100%">
                     <div
                         v-if="loadedRatio > 0 && loadedRatio < 1"

@@ -16,7 +16,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group ">
-                                <label for="">Recherche bon commande</label>
+                                <label for="">Recherche bon décharge</label>
                                 <input
                                     type="text"
                                     class="form-control"
@@ -25,7 +25,7 @@
                                     v-model="q"
                                     @keyup="searchcommande"
                                     aria-describedby="helpId"
-                                    placeholder="code commande"
+                                    placeholder="code décharge"
                                 />
                             </div>
                         </div>
@@ -34,6 +34,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">id</th>
+                                <th scope="col">code décharge</th>
                                 <th scope="col">structure</th>
                               
                              
@@ -54,8 +55,8 @@
                                         >{{ index }}</router-link
                                     >
                                 </th>
-                             
-                                <td>{{commande.structure.structure}}</td>
+                               <td>{{commande.code_decharge}}</td>
+                                <td>{{commande.structure.designation}}</td>
                                 <td>{{ commande.user.name}}</td>
                                 <td>{{ commande.created}}</td>
                                  <td>
@@ -94,13 +95,13 @@
 
                     <div class="card-footer d-flex justify-content-center">
                         <pagination
-                            :data="factures"
-                            @pagination-change-page="getfacture"
+                            :data="commandes"
+                            @pagination-change-page="getcommande"
                         ></pagination>
                     </div>
                 </div>
             </div>
-            <addcommande @add-fac="refresh()" />
+            <addcommande @add-com="refresh()" />
         </div>
     </div>
 </template>
@@ -152,8 +153,10 @@ export default {
 
         refresh() {
             this.getcommande();
+
+         
         },
-        supprimercommande() {
+        supprimercommande(commande) {
             Swal.fire({
                 position: "center ",
                 icon: "warning",
@@ -167,7 +170,7 @@ export default {
             }).then(result => {
                 if (result.value) {
                     axios
-                        .delete(`api/facture/${facture}`)
+                        .delete(`api/commande/${commande}`)
                         .then(response => {
 
                             

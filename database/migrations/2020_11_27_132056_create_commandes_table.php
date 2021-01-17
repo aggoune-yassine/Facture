@@ -13,13 +13,16 @@ class CreateCommandesTable extends Migration
      */
     public function up()
     {
+
+       
         Schema::create('commandes', function (Blueprint $table) {
             $table->id();
-           
-            $table->string('file')->nullable();
+            $table->string('code_decharge')->unique();
+            $table->string('file');
           
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned();
             $table->integer('structure_id')->nullable();
+          
 
 
             $table->timestamps();

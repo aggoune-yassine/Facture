@@ -45,14 +45,19 @@ Route::PUT('produit/{product}','ProductController@update');
 
 Route::delete('produit/{product}','ProductController@destroy');
 
+
+
+Route::delete('commande/{commande}','CommandeController@destroy');
+Route::get('commande/{q?}','CommandeController@index' );
 Route::get('commande/commande_produit/{commande}','CommandeController@Produit_commande' );
+Route::post('commande/update/{commande}','CommandeController@updatefile' );
 Route::delete('produit/supproduit/{product}','ProductController@supp_produit_decharge');
 Route::get('produit/addbon','ProductController@addbon');
 
 
 Route::get('structure','StructureController@index' );
 
-
+Route::delete('produit/deletefile/{product}','ProductController@suppfile');
 
 
 
@@ -67,4 +72,5 @@ Route::post('commande','CommandeController@store' );
 
 
 Route::get('structure','StructureController@index' );
+Route::get('materiel','MaterielController@index' );
 

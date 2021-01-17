@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStructuresTable extends Migration
+class CreateMaterielsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateStructuresTable extends Migration
      */
     public function up()
     {
-        Schema::create('structures', function (Blueprint $table) {
+        Schema::create('materiels', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
             $table->string('designation')->unique();
-
-
 
             $table->timestamps();
         });
@@ -31,6 +28,6 @@ class CreateStructuresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('structures');
+        Schema::dropIfExists('materiels');
     }
 }

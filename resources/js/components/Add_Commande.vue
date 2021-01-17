@@ -24,7 +24,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">
-                            Ajouter Commande
+                            Ajouter bon décharge
                         </h5>
                         <button
                             type="button"
@@ -41,7 +41,25 @@
                             enctype="multipart/form-data"
                         >
                         
-                           
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span
+                                        class="input-group-text"
+                                        id="basic-addon1"
+                                        >Code décharge</span
+                                    >
+                                </div>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="code facture"
+                                    aria-label="code facture"
+                                    aria-describedby="basic-addon1"
+                                    v-model="code_decharge"
+                                />
+                            </div>
+
+
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span
@@ -61,7 +79,7 @@
                                         :value="s.id"
                                         v-bind:key="index"
                                     >
-                                        {{ s.structure }}
+                                        {{ s.designation }}
                                     </option>
                                 </select>
                             </div>
@@ -74,7 +92,28 @@
                             </div>
 
                            
-
+    <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1"
+                                    >bon décharge</span
+                                >
+                                <div class="custom-file">
+                                    <input
+                                        type="file"
+                                        name="filename"
+                                        class="custom-file-input"
+                                        id="inputFileUpload"
+                                        @change="Piecedecharge"
+                                    />
+                                    <label
+                                        class="custom-file-label"
+                                        for="inputFileUpload"
+                                        >Choisir fichier
+                                    </label>
+                                </div>
+                            </div>
+                              <p class="text-danger font-weight-bold">
+                                {{ decharge1.name }}
+                            </p>
                          
 
                             <div class="modal-footer">
@@ -101,10 +140,11 @@
 export default {
     data() {
         return {
-          
+              code_decharge:'',
             structure: "",
             structure_id:'',
-            allerros: []
+            allerros: [],
+            decharge1:''
         };
     },
 
@@ -115,8 +155,10 @@ export default {
                 headers: { "Content-Type": "multipart/form-data" }
             };
             let formData = new FormData();
-
+            formData.append("code_decharge", this.code_decharge);
+            
             formData.append("structure_id", this.structure_id);
+            formData.append("decharge", this.decharge1);
           
 
             formData.append("user_id", User.isLogged().id);
@@ -156,37 +198,10 @@ export default {
                 });
         },
 
-        Piecedepense(event) {
-            this.Piece_depense1 = event.target.files[0];
+        Piecedecharge(event) {
+            this.decharge1 = event.target.files[0];
         },
 
-        facture(e) {
-            this.facture1 = e.target.files[0];
-        },
-        Bon_de_livraison(e) {
-            this.Bon_de_livraison1 = e.target.files[0];
-        },
-        Ordre_de_service(e) {
-            this.Ordre_de_service1 = e.target.files[0];
-        },
-        Bon_de_commande(e) {
-            this.Bon_de_commande1 = e.target.files[0];
-        },
-        Caution(e) {
-            this.Caution1 = e.target.files[0];
-        },
-        Pv_reception_provisoire(e) {
-            this.Pv_reception_provisoire1 = e.target.files[0];
-        },
-        Pv_de_reception(e) {
-            this.Pv_de_reception1 = e.target.files[0];
-        },
-        Contrat(e) {
-            this.Contrat1 = e.target.files[0];
-        },
-        proforma(e) {
-            this.proforma1 = e.target.files[0];
-        }
     },
 
     created() {

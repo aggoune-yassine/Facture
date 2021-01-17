@@ -45,6 +45,16 @@
                                 v-model="code"
                             />
                         </div>
+                          <div
+                                v-if="allerros.code"
+                                class="alert alert-danger"
+                                role="alert"
+                            >
+                                {{ allerros.code[0] }}
+                            </div>
+
+
+                            
                      
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -61,6 +71,46 @@
                                 v-model="description"
                             />
                         </div>
+
+                        <div
+                                v-if="allerros.description"
+                                class="alert alert-danger"
+                                role="alert"
+                            >
+                                {{ allerros.description[0] }}
+                            </div>
+
+                        <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span
+                                        class="input-group-text"
+                                        id="basic-addon1"
+                                        >Type</span
+                                    >
+                                </div>
+
+                                <select
+                                    class="custom-select"
+                                    id="inputGroupSelect01"
+                                    v-model="type_id"
+                                >
+                                    <option
+                                        v-for="(T, index) in type"
+                                        :value="T.id"
+                                        v-bind:key="index"
+                                    >
+                                        {{ T.designation }}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div
+                                v-if="allerros.materiel_id"
+                                class="alert alert-danger"
+                                role="alert"
+                            >
+                                {{ allerros.materiel_id[0] }}
+                            </div>
 
                  
 
@@ -86,6 +136,13 @@
                                 <option value="2023">2023</option>
                             </select>
                         </div>
+                           <div
+                                v-if="allerros.date"
+                                class="alert alert-danger"
+                                role="alert"
+                            >
+                                {{ allerros.date[0] }}
+                            </div>
 
 
                           <div class="input-group mb-3">
@@ -109,6 +166,13 @@
                              
                             </select>
                         </div>
+                          <div
+                                v-if="allerros.budget_id"
+                                class="alert alert-danger"
+                                role="alert"
+                            >
+                                {{ allerros.budget_id[0] }}
+                            </div>
 
 
 
@@ -128,6 +192,7 @@
                                 <span class="input-group-text">.00</span>
                             </div>
                         </div>
+                        
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -137,6 +202,7 @@
                                     >Prix total</label
                                 >
                             </div>
+                            
 
                             <div class="input-group-append">
                                 <span class="input-group-text">{{
@@ -147,6 +213,13 @@
                                 <span class="input-group-text">DA</span>
                             </div>
                         </div>
+                           <div
+                                v-if="allerros.unit_price"
+                                class="alert alert-danger"
+                                role="alert"
+                            >
+                                {{ allerros.unit_price[0] }}
+                            </div>
                     </div>
                     <div class="modal-footer">
                         <button
@@ -157,7 +230,7 @@
                             Close
                         </button>
                         <button type="button" class="btn btn-primary" @click="addpruduct">
-                            Save changes
+                            Save 
                         </button>
                     </div>
                 </div>
@@ -178,6 +251,10 @@ export default {
             unit_price: "00",
             id_facture: this.$route.params.id,
             budgets:'',
+            allerros: [],
+            type:'',
+            type_id:'',
+            outofrange:'',
            
             
         };
@@ -193,26 +270,43 @@ export default {
             axios.post('/api/produit', {
             date:this.date,
             code:this.code,
-            code_budget:this.code_budget,
+            budget_id:this.code_budget,
             description:this.description,
       
             unit_price: this.unit_price,
             id_facture: this.$route.params.id,
+            materiel_id:this.type_id,
             
             })
             .then(response=> {
-                console.log('information'+response.data.facture);
+               // console.log('information'+response.data.facture);
             this.$emit('add-prod',response.data);
-            this.date_achat="";
+            this.date="";
             this.description="",
+            this.code_budget="",
            
            
             this.unit_price="",
             this.id_facture=""
             })
-            .catch(error=> {
-                console.log(error);
-            })
+             .catch(error => {
+                    this.allerros = error.response.data.errors;
+                    this.outofrange = error.response.data.exception;
+   if(this.outofrange=="Illuminate\\Database\\QueryException")
+   { 
+                  Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'Something went wrong ! THE Budget is insufficient',
+  footer: '<a href>Why do I have this issue?</a>'
+})
+
+   }
+                   // this.$emit("add-fac");
+                   // $("#addFacture").modal("hide");
+                 
+                  
+                });
         },
 
   getBudget(){
@@ -227,11 +321,24 @@ export default {
                     console.log(error);
                 })
             },
+
+              getTypemateriel() {
+            axios
+                .get("/api/materiel")
+                .then(response => {
+                    console.log(response.data);
+                    this.type = response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
     },
 
        created() {
              // alert("qsdqsdqs");
              this.getBudget();
+             this.getTypemateriel();
             
             
         },

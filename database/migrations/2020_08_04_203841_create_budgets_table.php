@@ -23,6 +23,7 @@ class CreateBudgetsTable extends Migration
 
             $table->unsignedInteger('date');
             $table->unique(['code', 'date']);
+            $table->double('montant_initial',14,2)->unsigned();
             $table->double('montant',14,2)->unsigned();
 
 
