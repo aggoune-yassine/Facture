@@ -216,7 +216,7 @@ export default {
                 .then(response => {
                     //console.log(response);
 
-                    Swal.fire({
+                    Swal({
                         position: "center ",
                         icon: "success",
                         title: "Facture Ajoutée",

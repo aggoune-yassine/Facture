@@ -120,6 +120,9 @@ export default {
     },
 
     methods: {
+
+
+        
         searchfacture() {
          //   if (this.q.length > 3) {
                 axios
@@ -155,6 +158,7 @@ export default {
             this.getfacture();
         },
         supprimerfacture(facture) {
+          
             Swal.fire({
                 position: "center ",
                 icon: "warning",
